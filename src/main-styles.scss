@@ -1,0 +1,12 @@
+@import './variables'; // ✅ works for sure
+
+// Test styles
+html,
+body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: 'Vollkorn SC', serif !important;
+    background: linear-gradient(to right top, $bright-blue, $mid-blue);
+    color: white;
+}

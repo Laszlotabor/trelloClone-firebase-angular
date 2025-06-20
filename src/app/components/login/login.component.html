@@ -1,0 +1,39 @@
+<div class="login-wrapper">
+    <div class="login-card">
+      <h2>Log In</h2>
+  
+      <form (submit)="login(); $event.preventDefault()">
+        <label for="email">Email</label>
+        <input
+          id="email"
+          type="email"
+          [(ngModel)]="email"
+          name="email"
+          placeholder="you@example.com"
+          required
+        />
+  
+        <label for="password">Password</label>
+        <input
+          id="password"
+          type="password"
+          [(ngModel)]="password"
+          name="password"
+          placeholder="Your password"
+          required
+        />
+  
+        <button type="submit">Log In</button>
+  
+        <button type="button" class="google-btn" (click)="loginWithGoogle()">
+          Log in with Google
+        </button>
+  
+        <p class="register-link">
+          Don't have an account?
+          <a routerLink="/register">Register here</a>
+        </p>
+      </form>
+    </div>
+  </div>
+  

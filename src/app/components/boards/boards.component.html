@@ -1,0 +1,23 @@
+<div class="boards-container">
+    <h2>Your Boards</h2>
+  
+    <!-- Create Board Form -->
+    <form (submit)="createBoard(); $event.preventDefault()" class="board-form">
+      <input type="text" placeholder="Board Title" [(ngModel)]="title" name="title" required />
+      <textarea placeholder="Description (optional)" [(ngModel)]="description" name="description"></textarea>
+      <button type="submit">Create Board</button>
+    </form>
+  
+    <!-- List Boards -->
+    <div class="board-list" *ngIf="boards.length > 0; else noBoards">
+      <div class="board-card" *ngFor="let board of boards">
+        <h3>{{ board.title }}</h3>
+        <p>{{ board.description }}</p>
+      </div>
+    </div>
+  
+    <ng-template #noBoards>
+      <p>No boards yet. Create one above!</p>
+    </ng-template>
+  </div>
+  

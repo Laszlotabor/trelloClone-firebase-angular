@@ -1,0 +1,89 @@
+@use '../../../_variables' as *; // adjust if needed
+
+.login-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: $light-dark-blue;
+}
+
+.login-card {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    width: 100%;
+    max-width: 400px;
+    color: $dark-blue;
+
+    h2 {
+        text-align: center;
+        color: $mid-blue;
+        margin-bottom: 1.5rem;
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+
+        label {
+            font-weight: 600;
+            color: $light-dark-blue;
+        }
+
+        input {
+            padding: 0.6rem;
+            border-radius: 6px;
+            border: 1px solid $mid-blue;
+            font-size: 1rem;
+            background-color: $more-bright-blue;
+
+            &:focus {
+                outline: none;
+                border-color: $bright-blue;
+                box-shadow: 0 0 0 2px rgba($bright-blue, 0.25);
+            }
+        }
+
+        button {
+            padding: 0.75rem;
+            font-size: 1rem;
+            font-weight: bold;
+            color: white;
+            background-color: $mid-blue;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+
+            &:hover {
+                background-color: $light-dark-blue;
+            }
+
+            &.google-btn {
+                background-color: $bright-blue;
+                margin-top: -0.5rem;
+
+                &:hover {
+                    background-color: $mid-blue;
+                }
+            }
+        }
+
+        .register-link {
+            text-align: center;
+            margin-top: 1rem;
+
+            a {
+                color: $mid-blue;
+                text-decoration: underline;
+
+                &:hover {
+                    color: $bright-blue;
+                }
+            }
+        }
+    }
+}
