@@ -4,11 +4,13 @@ import { FormsModule } from '@angular/forms';
 import { Board } from '../../models/board.model';
 import { BoardServiceService } from '../../services/board-service.service';
 import { AuthServiceService } from '../../services/auth-service.service';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-boards',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterLink
+],
   templateUrl: './boards.component.html',
   styleUrls: ['./boards.component.scss'],
 })

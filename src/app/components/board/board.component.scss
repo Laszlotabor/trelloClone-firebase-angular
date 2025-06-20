@@ -1,0 +1,89 @@
+@use '../../../_variables' as *;
+
+.board-container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 1rem;
+    background-color: $more-bright-blue;
+    border-radius: 12px;
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+}
+
+.board-header {
+    text-align: center;
+    margin-bottom: 2rem;
+
+    h2 {
+        color: $dark-blue;
+        margin-bottom: 0.5rem;
+    }
+
+    p {
+        color: $light-dark-blue;
+        font-size: 1rem;
+    }
+}
+
+.create-list-form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-bottom: 2rem;
+
+    input,
+    textarea {
+        padding: 0.6rem;
+        font-size: 1rem;
+        border: 1px solid $mid-blue;
+        border-radius: 6px;
+        background-color: white;
+    }
+
+    button {
+        align-self: flex-start;
+        padding: 0.5rem 1.5rem;
+        background-color: $mid-blue;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+
+        &:hover {
+            background-color: $light-dark-blue;
+        }
+    }
+}
+
+.lists-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    justify-content: flex-start;
+}
+
+.list-column {
+    flex: 0 0 250px;
+    background-color: $bright-blue;
+    padding: 1rem;
+    border-radius: 8px;
+    border: 1px solid $mid-blue;
+    color: $dark-blue;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+
+    h4 {
+        margin: 0 0 0.5rem 0;
+        color: $dark-blue;
+    }
+
+    p {
+        font-size: 0.95rem;
+        color: $light-dark-blue;
+    }
+
+    .empty {
+        font-style: italic;
+        color: rgba(0, 0, 0, 0.4);
+        margin-top: 0.5rem;
+    } }

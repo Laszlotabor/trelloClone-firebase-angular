@@ -10,10 +10,15 @@
   
     <!-- List Boards -->
     <div class="board-list" *ngIf="boards.length > 0; else noBoards">
-      <div class="board-card" *ngFor="let board of boards">
+        <div
+        class="board-card"
+        *ngFor="let board of boards"
+        [routerLink]="['/board', board.id]"
+      >
         <h3>{{ board.title }}</h3>
         <p>{{ board.description }}</p>
       </div>
+      
     </div>
   
     <ng-template #noBoards>

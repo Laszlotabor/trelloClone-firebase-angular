@@ -1,0 +1,40 @@
+<div class="board-container" *ngIf="board">
+    <!-- Board Header -->
+    <div class="board-header">
+      <h2>{{ board.title }}</h2>
+      <p *ngIf="board.description">{{ board.description }}</p>
+    </div>
+  
+    <!-- Create List Form -->
+    <form class="create-list-form" (submit)="createList(); $event.preventDefault()">
+      <input
+        type="text"
+        name="title"
+        placeholder="New list title"
+        [(ngModel)]="newListTitle"
+        required
+      />
+      <textarea
+        name="description"
+        placeholder="Optional description"
+        [(ngModel)]="newListDescription"
+      ></textarea>
+      <button type="submit">Add List</button>
+    </form>
+  
+    <!-- Lists Display -->
+    <div class="lists-wrapper">
+      <div class="list-column" *ngFor="let list of lists">
+        <h4>{{ list.title }}</h4>
+        <p *ngIf="list.description">{{ list.description }}</p>
+  
+        <!-- Cards will go here later -->
+        <p class="empty">[Cards coming soon]</p>
+      </div>
+    </div>
+  </div>
+  
+  <ng-template #loading>
+    <p>Loading board...</p>
+  </ng-template>
+  
