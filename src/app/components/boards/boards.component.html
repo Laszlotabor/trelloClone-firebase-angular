@@ -1,5 +1,8 @@
 <div class="boards-container">
-    <h2>Your Boards</h2>
+  <div class="boards-header">
+    <h2>Hello, {{ userEmail }}</h2>
+    <p>Here are your boards:</p>
+  </div>
   
     <!-- Create Board Form -->
     <form (submit)="createBoard(); $event.preventDefault()" class="board-form">
@@ -8,18 +11,22 @@
       <button type="submit">Create Board</button>
     </form>
   
-    <!-- List Boards -->
-    <div class="board-list" *ngIf="boards.length > 0; else noBoards">
-        <div
-        class="board-card"
-        *ngFor="let board of boards"
-        [routerLink]="['/board', board.id]"
-      >
-        <h3>{{ board.title }}</h3>
-        <p>{{ board.description }}</p>
-      </div>
-      
+   <!-- List Boards -->
+<div class="board-list" *ngIf="boards.length > 0; else noBoards">
+  <div
+    class="board-card"
+    *ngFor="let board of boards"
+    [routerLink]="['/board', board.id]"
+  >
+    <div class="board-card-content">
+      <h3>{{ board.title }}</h3>
+      <p>{{ board.description }}</p>
     </div>
+
+ 
+  </div>
+</div>
+
   
     <ng-template #noBoards>
       <p>No boards yet. Create one above!</p>

@@ -7,11 +7,12 @@ import { BoardsComponent } from './components/boards/boards.component';
 import { BoardComponent } from './components/board/board.component';
 
 export const routes: Routes = [
-  { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
-  { path: 'boards', component: BoardsComponent, canActivate: [AuthGuard] },
-  { path: 'board/:id', component: BoardComponent, canActivate: [AuthGuard] },
+  { path: 'home', component: HomeComponent }, // 👈 removed canActivate
+  { path: 'boards', component: BoardsComponent },
+  { path: 'board/:id', component: BoardComponent },
 
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: '', redirectTo: 'home', pathMatch: 'full' },
 ];
+

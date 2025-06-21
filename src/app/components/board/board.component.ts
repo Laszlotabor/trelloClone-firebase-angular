@@ -74,8 +74,15 @@ export class BoardComponent implements OnInit {
     this.loadLists();
   }
 
- 
   goBack(): void {
     this.router.navigate(['/boards']); // 👈 Adjust path if needed
+  }
+
+  async deleteBoard(): Promise<void> {
+    const confirmed = confirm(`Delete board "${this.board?.title}"?`);
+    if (!confirmed || !this.board) return;
+
+    await this.boardService.deleteBoard(this.board.id!);
+    this.router.navigate(['/boards']);
   }
 }

@@ -1,16 +1,22 @@
 <div class="board-container" *ngIf="board">
   <!-- Top Section: Header and Form (1/5 of viewport) -->
   <div class="top-section">
-    <!-- Board Header -->
     <div class="board-header">
       <h2>Hello, {{ userEmail }}</h2>
-      
-<p>
-  Welcome on board <strong>{{ board.title }}</strong>
-  <span *ngIf="board.description"> that was created for <em>{{ board.description }}</em></span>.
-</p>
-<button class="btn-back" (click)="goBack()">← Back to Boards</button>
+    
+      <p>
+        Welcome on board <strong>{{ board.title }}</strong>
+        <span *ngIf="board.description">
+          that was created for <em>{{ board.description }}</em>
+        </span>.
+      </p>
+    
+      <div class="header-actions">
+        <button class="btn-back" (click)="goBack()">← Back to Boards</button>
+        <button class="btn-delete-board" (click)="deleteBoard()">Delete Board</button>
+      </div>
     </div>
+    
 
     <!-- Create List Form -->
     <form class="create-list-form" (submit)="createList(); $event.preventDefault()">
