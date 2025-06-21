@@ -1,23 +1,29 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { getAuth, onAuthStateChanged, User } from '@angular/fire/auth';
-import { Router } from '@angular/router';
-
+import {
+  CdkDragDrop,
+  moveItemInArray,
+  transferArrayItem,
+} from '@angular/cdk/drag-drop';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 import { Board } from '../../models/board.model';
 import { List } from '../../models/list.model';
-
+import { Card } from '../../models/card.model';
 
 import { BoardServiceService } from '../../services/board-service.service';
 import { ListServiceService } from '../../services/list-service.service';
+import { CardserviceService } from '../../services/cardservice.service';
+
 import { ListComponent } from '../list/list.component';
 
 @Component({
   selector: 'app-board',
   standalone: true,
-  imports: [CommonModule, FormsModule, ListComponent],
+  imports: [CommonModule, FormsModule, ListComponent, DragDropModule],
   templateUrl: './board.component.html',
   styleUrls: ['./board.component.scss'],
 })
@@ -26,8 +32,9 @@ export class BoardComponent implements OnInit {
   board: Board | null = null;
 
   lists: List[] = [];
-  userEmail: string = '';
+  cardsMap: { [listId: string]: Card[] } = {};
 
+  userEmail: string = '';
   newListTitle: string = '';
   newListDescription: string = '';
 
@@ -35,6 +42,7 @@ export class BoardComponent implements OnInit {
     private route: ActivatedRoute,
     private boardService: BoardServiceService,
     private listService: ListServiceService,
+    private cardService: CardserviceService,
     private router: Router
   ) {
     const auth = getAuth();
@@ -55,6 +63,13 @@ export class BoardComponent implements OnInit {
 
   async loadLists(): Promise<void> {
     this.lists = await this.listService.getListsByBoard(this.boardId);
+
+    for (const list of this.lists) {
+      const cards = await this.cardService.getCardsByList(list.id!);
+      this.cardsMap[list.id!] = cards.sort(
+        (a, b) => (a.position ?? 0) - (b.position ?? 0)
+      );
+    }
   }
 
   async createList(): Promise<void> {
@@ -65,7 +80,7 @@ export class BoardComponent implements OnInit {
       description: this.newListDescription.trim(),
       boardId: this.boardId,
       createdAt: Date.now(),
-      position: Date.now(), // ✅ or use lists.length
+      position: Date.now(),
     };
 
     await this.listService.createList(newList);
@@ -75,7 +90,7 @@ export class BoardComponent implements OnInit {
   }
 
   goBack(): void {
-    this.router.navigate(['/boards']); // 👈 Adjust path if needed
+    this.router.navigate(['/boards']);
   }
 
   async deleteBoard(): Promise<void> {
@@ -84,5 +99,35 @@ export class BoardComponent implements OnInit {
 
     await this.boardService.deleteBoard(this.board.id!);
     this.router.navigate(['/boards']);
+  }
+
+  getDropListIds(): string[] {
+    return this.lists.map((list) => 'cdk-drop-list-' + list.id);
+  }
+
+  async onCardDrop(
+    event: CdkDragDrop<Card[]>,
+    targetListId: string
+  ): Promise<void> {
+    if (event.previousContainer === event.container) {
+      moveItemInArray(
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex
+      );
+    } else {
+      const movedCard = event.previousContainer.data[event.previousIndex];
+      movedCard.listId = targetListId;
+      movedCard.position = Date.now();
+
+      transferArrayItem(
+        event.previousContainer.data,
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex
+      );
+
+      await this.cardService.updateCardListChange(movedCard, targetListId);
+    }
   }
 }

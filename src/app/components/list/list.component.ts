@@ -1,6 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { DragDropModule, CdkDragDrop } from '@angular/cdk/drag-drop';
 
 import { List } from '../../models/list.model';
 import { Card } from '../../models/card.model';
@@ -10,27 +11,28 @@ import { CardComponent } from '../card/card.component';
 @Component({
   selector: 'app-list',
   standalone: true,
-  imports: [CommonModule, FormsModule, CardComponent],
+  imports: [CommonModule, FormsModule, CardComponent, DragDropModule],
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss'],
 })
 export class ListComponent implements OnInit {
   @Input() list!: List;
+  @Input() cards: Card[] = [];
+  @Input() connectedDropLists: string[] = [];
 
-  cards: Card[] = [];
+  @Output() cardDropped = new EventEmitter<{
+    event: CdkDragDrop<Card[]>;
+    listId: string;
+  }>();
 
   newCardTitle = '';
   newCardDescription = '';
-  showAddCardForm = false; // 👈 add toggle state
+  showAddCardForm = false;
 
   constructor(private cardService: CardserviceService) {}
 
   ngOnInit(): void {
-    this.loadCards();
-  }
-
-  async loadCards(): Promise<void> {
-    this.cards = await this.cardService.getCardsByList(this.list.id!);
+    // cards are provided from parent via [cards] input
   }
 
   toggleAddCardForm(): void {
@@ -57,6 +59,11 @@ export class ListComponent implements OnInit {
     this.newCardTitle = '';
     this.newCardDescription = '';
     this.showAddCardForm = false;
-    await this.loadCards();
+
+    this.cards.push(newCard); // Update local list immediately
+  }
+
+  onCardDrop(event: CdkDragDrop<Card[]>): void {
+    this.cardDropped.emit({ event, listId: this.list.id! });
   }
 }

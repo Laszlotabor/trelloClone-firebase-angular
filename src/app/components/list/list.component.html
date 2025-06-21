@@ -5,52 +5,51 @@
       <p class="list-description" *ngIf="list.description">{{ list.description }}</p>
     </div>
   
-    <!-- Cards Area -->
-    <div class="cards-area">
+    <!-- Cards Area with Drag/Drop -->
+    <div
+      class="cards-area"
+      cdkDropList
+      [cdkDropListData]="cards"
+      [cdkDropListConnectedTo]="connectedDropLists"
+      (cdkDropListDropped)="onCardDrop($event)"
+    >
       <div *ngIf="cards.length === 0" class="empty">No cards yet</div>
-      
+  
       <app-card
-  *ngFor="let card of cards"
-  [card]="card"
-  (cardChanged)="loadCards()"
-></app-card>
-
+        *ngFor="let card of cards"
+        [card]="card"
+        cdkDrag
+      ></app-card>
     </div>
   
-   <!-- Add Card Section -->
-<div class="add-card-area">
-    <ng-container *ngIf="!showAddCardForm; else cardForm">
-      <button
-        class="btn-add-card"
-        (click)="toggleAddCardForm()"
-      >
-        + Add Card
-      </button>
-    </ng-container>
+    <!-- Add Card Form -->
+    <div class="add-card-area">
+      <ng-container *ngIf="!showAddCardForm; else cardForm">
+        <button class="btn-add-card" (click)="toggleAddCardForm()">+ Add Card</button>
+      </ng-container>
   
-    <ng-template #cardForm>
-      <div class="card-form-container">
-        <input
-          type="text"
-          [(ngModel)]="newCardTitle"
-          name="cardTitle"
-          placeholder="Card title"
-          required
-        />
-        <textarea
-          [(ngModel)]="newCardDescription"
-          name="cardDescription"
-          placeholder="Description (optional)"
-          rows="1"
-        ></textarea>
+      <ng-template #cardForm>
+        <div class="card-form-container">
+          <input
+            type="text"
+            [(ngModel)]="newCardTitle"
+            name="cardTitle"
+            placeholder="Card title"
+            required
+          />
+          <textarea
+            [(ngModel)]="newCardDescription"
+            name="cardDescription"
+            placeholder="Description (optional)"
+            rows="1"
+          ></textarea>
   
-        <div class="form-actions">
-          <button (click)="createCard()">Add</button>
-          <button type="button" (click)="toggleAddCardForm()">×</button>
+          <div class="form-actions">
+            <button (click)="createCard()">Add</button>
+            <button type="button" (click)="toggleAddCardForm()">×</button>
+          </div>
         </div>
-      </div>
-    </ng-template>
-  </div>
-  
+      </ng-template>
+    </div>
   </div>
   

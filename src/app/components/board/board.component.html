@@ -1,46 +1,45 @@
 <div class="board-container" *ngIf="board">
-  <!-- Top Section: Header and Form (1/5 of viewport) -->
+  <!-- Top Section -->
   <div class="top-section">
     <div class="board-header">
       <h2>Hello, {{ userEmail }}</h2>
-    
       <p>
         Welcome on board <strong>{{ board.title }}</strong>
         <span *ngIf="board.description">
           that was created for <em>{{ board.description }}</em>
         </span>.
       </p>
-    
       <div class="header-actions">
         <button class="btn-back" (click)="goBack()">← Back to Boards</button>
         <button class="btn-delete-board" (click)="deleteBoard()">Delete Board</button>
       </div>
     </div>
-    
 
     <!-- Create List Form -->
     <form class="create-list-form" (submit)="createList(); $event.preventDefault()">
-      <input
-        type="text"
-        name="title"
-        placeholder="New list title"
-        [(ngModel)]="newListTitle"
-        required
-      />
-      <textarea
-        name="description"
-        placeholder="Optional description"
-        [(ngModel)]="newListDescription"
-        rows="1"
-      ></textarea>
+      <input type="text" placeholder="New list title" [(ngModel)]="newListTitle" name="title" required />
+      <textarea placeholder="Optional description" [(ngModel)]="newListDescription" name="description"></textarea>
       <button type="submit">Add List</button>
     </form>
-    
   </div>
 
-  <!-- Lists Section (4/5 of viewport) -->
+  <!-- Lists Section -->
   <div class="lists-wrapper">
-    <app-list *ngFor="let list of lists" [list]="list"></app-list>
+    <div
+      class="list-drop-wrapper"
+      *ngFor="let list of lists"
+      cdkDropList
+      [id]="'cdk-drop-list-' + list.id"
+      [cdkDropListData]="cardsMap[list.id!]"
+      [cdkDropListConnectedTo]="getDropListIds()"
+      (cdkDropListDropped)="onCardDrop($event, list.id!)"
+    >
+      <app-list
+        [list]="list"
+        [cards]="cardsMap[list.id!]"
+        [connectedDropLists]="getDropListIds()"
+      ></app-list>
+    </div>
   </div>
 </div>
 

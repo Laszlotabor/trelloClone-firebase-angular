@@ -5,5 +5,6 @@ export interface Card {
   listId: string;
   boardId: string;
   createdAt: number;
-  position: number;
+  position?: number;
+  updatedAt?: number; // 👈 Add this line
 }

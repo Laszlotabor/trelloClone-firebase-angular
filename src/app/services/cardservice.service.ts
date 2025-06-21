@@ -1,8 +1,15 @@
 import { Injectable } from '@angular/core';
-import { Database, ref, push, set, get, child } from '@angular/fire/database';
+import {
+  Database,
+  ref,
+  push,
+  set,
+  get,
+  child,
+  update,
+  remove,
+} from '@angular/fire/database';
 import { Card } from '../models/card.model';
-import { update, remove } from '@angular/fire/database';
-
 
 @Injectable({
   providedIn: 'root',
@@ -38,5 +45,25 @@ export class CardserviceService {
     if (!card.id || !card.listId) throw new Error('Missing card ID or list ID');
     const cardRef = ref(this.db, `cards/${card.listId}/${card.id}`);
     await remove(cardRef);
+  }
+
+  /**
+   * Move a card to a new list and persist the change in Firebase
+   */
+  async updateCardListChange(card: Card, newListId: string): Promise<void> {
+    if (!card.id || !card.listId) throw new Error('Missing card ID or list ID');
+
+    const oldRef = ref(this.db, `cards/${card.listId}/${card.id}`);
+    const newRef = ref(this.db, `cards/${newListId}/${card.id}`);
+
+    const updatedCard: Card = {
+      ...card,
+      listId: newListId,
+      position: card.position ?? Date.now(),
+      updatedAt: Date.now(),
+    };
+
+    await set(newRef, updatedCard);
+    await remove(oldRef);
   }
 }
