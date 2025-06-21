@@ -56,8 +56,13 @@ export class BoardsComponent implements OnInit {
   }
 
   async loadBoards(): Promise<void> {
-    if (!this.uid) return;
-    this.boards = await this.boardService.getBoardsByUser(this.uid);
+    const allBoards = await this.boardService.getAllBoards(); // must return all from Firebase
+    this.boards = allBoards.filter(
+      (board) =>
+        board.owner === this.uid ||
+        (board.allowedUsers?.includes(this.userEmail) ?? false)
+    );
+    
   }
 
   async deleteBoard(board: Board, event: MouseEvent): Promise<void> {

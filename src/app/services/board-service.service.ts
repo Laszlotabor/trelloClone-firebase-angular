@@ -26,7 +26,7 @@ export class BoardServiceService {
     });
   }
 
-  // ✅ Get all boards for a user
+  // ✅ Get all boards for a user (owner only)
   async getBoardsByUser(userId: string): Promise<Board[]> {
     const snapshot = await get(ref(this.db, 'boards'));
     const boards: Board[] = [];
@@ -43,12 +43,24 @@ export class BoardServiceService {
     return boards;
   }
 
-  // ✅ Update board title/description/etc.
+  // ✅ Get all boards (for access filtering in component)
+  async getAllBoards(): Promise<Board[]> {
+    const snapshot = await get(ref(this.db, 'boards'));
+    if (!snapshot.exists()) return [];
+
+    const data = snapshot.val();
+    return Object.entries(data).map(([id, board]) => ({
+      id,
+      ...(board as Board),
+    }));
+  }
+
+  // ✅ Update board
   updateBoard(id: string, data: Partial<Board>): Promise<void> {
     return update(ref(this.db, `boards/${id}`), data);
   }
 
-  // ✅ Delete a board by ID
+  // ✅ Delete board
   deleteBoard(id: string): Promise<void> {
     return remove(ref(this.db, `boards/${id}`));
   }

@@ -37,6 +37,7 @@ export class BoardComponent implements OnInit {
   userEmail: string = '';
   newListTitle: string = '';
   newListDescription: string = '';
+  newAllowedEmail: string = '';
 
   constructor(
     private route: ActivatedRoute,
@@ -137,5 +138,23 @@ export class BoardComponent implements OnInit {
     // Remove from local lists
     this.lists = this.lists.filter((list) => list.id !== listId);
     delete this.cardsMap[listId];
+  }
+  async addAllowedUser(): Promise<void> {
+    const email = this.newAllowedEmail.trim();
+    if (!email || !this.board) return;
+
+    // Ensure allowedUsers is initialized
+    if (!this.board.allowedUsers) {
+      this.board.allowedUsers = [];
+    }
+
+    // Only add if not already present
+    if (!this.board.allowedUsers.includes(email)) {
+      this.board.allowedUsers.push(email);
+      await this.boardService.updateBoard(this.board.id!, {
+        allowedUsers: this.board.allowedUsers,
+      });
+      this.newAllowedEmail = '';
+    }
   }
 }
