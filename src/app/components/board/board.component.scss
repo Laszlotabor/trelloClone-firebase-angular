@@ -24,6 +24,18 @@ $dark-blue: rgb(2, 15, 26);
     margin-bottom: 1rem;
 }
 
+.btn-back {
+    background-color: $mid-blue;
+    color: white;
+    border: none;
+    padding: 0.4rem 0.8rem;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    cursor: pointer;
+
+    &:hover {
+        background-color: $light-dark-blue; }
+    }
 .board-header {
     flex: 1;
 
@@ -92,4 +104,66 @@ $dark-blue: rgb(2, 15, 26);
     gap: 1rem;
     overflow-x: auto;
     padding-bottom: 1rem;
+}
+
+
+/* Medium Screens (Tablet) */
+@media (max-width: 768px) {
+    .top-section {
+        flex-direction: column;
+        flex: 0 0 auto;
+        gap: 1rem;
+    }
+
+    .create-list-form {
+        flex-direction: column;
+
+        input,
+        textarea {
+            width: 100%;
+        }
+
+        button {
+            width: fit-content;
+        }
+    }
+
+    .btn-back {
+        align-self: flex-start;
+    }
+}
+
+/* Small Screens (Phones) */
+@media (max-width: 480px) {
+    .board-container {
+        padding: 0.5rem;
+    }
+
+    .board-header {
+        h2 {
+            font-size: 1.1rem;
+        }
+
+        p {
+            font-size: 0.9rem;
+        }
+    }
+
+    .create-list-form {
+        padding: 0.5rem;
+
+        input,
+        textarea {
+            font-size: 0.9rem;
+        }
+
+        button {
+            font-size: 0.85rem;
+            padding: 0.3rem 0.8rem;
+        }
+    }
+
+    .lists-wrapper {
+        gap: 0.5rem;
+    }
 }

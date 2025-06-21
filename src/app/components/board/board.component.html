@@ -4,11 +4,12 @@
     <!-- Board Header -->
     <div class="board-header">
       <h2>Hello, {{ userEmail }}</h2>
+      
 <p>
   Welcome on board <strong>{{ board.title }}</strong>
   <span *ngIf="board.description"> that was created for <em>{{ board.description }}</em></span>.
 </p>
-
+<button class="btn-back" (click)="goBack()">← Back to Boards</button>
     </div>
 
     <!-- Create List Form -->

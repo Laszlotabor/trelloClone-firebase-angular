@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { getAuth, onAuthStateChanged, User } from '@angular/fire/auth';
+import { Router } from '@angular/router';
 
 
 import { Board } from '../../models/board.model';
@@ -31,15 +32,16 @@ export class BoardComponent implements OnInit {
   newListDescription: string = '';
 
   constructor(
-  private route: ActivatedRoute,
-  private boardService: BoardServiceService,
-  private listService: ListServiceService
-) {
-  const auth = getAuth();
-  onAuthStateChanged(auth, (user: User | null) => {
-    this.userEmail = user?.email || 'Guest';
-  });
-}
+    private route: ActivatedRoute,
+    private boardService: BoardServiceService,
+    private listService: ListServiceService,
+    private router: Router
+  ) {
+    const auth = getAuth();
+    onAuthStateChanged(auth, (user: User | null) => {
+      this.userEmail = user?.email || 'Guest';
+    });
+  }
 
   ngOnInit(): void {
     this.boardId = this.route.snapshot.paramMap.get('id')!;
@@ -70,5 +72,10 @@ export class BoardComponent implements OnInit {
     this.newListTitle = '';
     this.newListDescription = '';
     this.loadLists();
+  }
+
+ 
+  goBack(): void {
+    this.router.navigate(['/boards']); // 👈 Adjust path if needed
   }
 }
