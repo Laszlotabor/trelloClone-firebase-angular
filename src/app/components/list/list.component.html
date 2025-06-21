@@ -8,26 +8,28 @@
     <!-- Cards Area -->
     <div class="cards-area">
       <div *ngIf="cards.length === 0" class="empty">No cards yet</div>
-      <app-card *ngFor="let card of cards" [card]="card"></app-card>
+      
+      <app-card
+  *ngFor="let card of cards"
+  [card]="card"
+  (cardChanged)="loadCards()"
+></app-card>
+
     </div>
   
-    <!-- Add Card Section -->
-    <div class="add-card-area">
-      <!-- Add Button (shown when form is hidden) -->
+   <!-- Add Card Section -->
+<div class="add-card-area">
+    <ng-container *ngIf="!showAddCardForm; else cardForm">
       <button
         class="btn-add-card"
-        *ngIf="!showAddCardForm"
         (click)="toggleAddCardForm()"
       >
         + Add Card
       </button>
+    </ng-container>
   
-      <!-- Card Form (shown when toggled open) -->
-      <form
-        *ngIf="showAddCardForm"
-        class="card-form"
-        (submit)="createCard(); $event.preventDefault()"
-      >
+    <ng-template #cardForm>
+      <div class="card-form-container">
         <input
           type="text"
           [(ngModel)]="newCardTitle"
@@ -43,10 +45,12 @@
         ></textarea>
   
         <div class="form-actions">
-          <button type="submit">Add</button>
-          <button type="button" (click)="toggleAddCardForm()">Cancel</button>
+          <button (click)="createCard()">Add</button>
+          <button type="button" (click)="toggleAddCardForm()">×</button>
         </div>
-      </form>
-    </div>
+      </div>
+    </ng-template>
+  </div>
+  
   </div>
   
