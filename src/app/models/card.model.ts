@@ -3,5 +3,7 @@ export interface Card {
   title: string;
   description?: string;
   listId: string;
+  boardId: string;
   createdAt: number;
+  position: number;
 }

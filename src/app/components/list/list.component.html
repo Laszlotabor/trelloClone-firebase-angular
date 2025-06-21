@@ -1,15 +1,52 @@
 <div class="list-column">
+    <!-- List Header -->
     <div class="list-header">
       <h2 class="list-title">{{ list.title }}</h2>
       <p class="list-description" *ngIf="list.description">{{ list.description }}</p>
     </div>
   
-    <!-- Cards go here -->
-    <div class="card-placeholder">
-      <p class="empty">[Cards coming soon]</p>
+    <!-- Cards Area -->
+    <div class="cards-area">
+      <div *ngIf="cards.length === 0" class="empty">No cards yet</div>
+      <app-card *ngFor="let card of cards" [card]="card"></app-card>
     </div>
   
-    <!-- Add Card Button -->
-    <button class="btn-add-card">+ Add Card</button>
+    <!-- Add Card Section -->
+    <div class="add-card-area">
+      <!-- Add Button (shown when form is hidden) -->
+      <button
+        class="btn-add-card"
+        *ngIf="!showAddCardForm"
+        (click)="toggleAddCardForm()"
+      >
+        + Add Card
+      </button>
+  
+      <!-- Card Form (shown when toggled open) -->
+      <form
+        *ngIf="showAddCardForm"
+        class="card-form"
+        (submit)="createCard(); $event.preventDefault()"
+      >
+        <input
+          type="text"
+          [(ngModel)]="newCardTitle"
+          name="cardTitle"
+          placeholder="Card title"
+          required
+        />
+        <textarea
+          [(ngModel)]="newCardDescription"
+          name="cardDescription"
+          placeholder="Description (optional)"
+          rows="1"
+        ></textarea>
+  
+        <div class="form-actions">
+          <button type="submit">Add</button>
+          <button type="button" (click)="toggleAddCardForm()">Cancel</button>
+        </div>
+      </form>
+    </div>
   </div>
   
