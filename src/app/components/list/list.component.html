@@ -2,6 +2,7 @@
     <!-- List Header -->
     <div class="list-header">
       <h2 class="list-title">{{ list.title }}</h2>
+      
       <p class="list-description" *ngIf="list.description">{{ list.description }}</p>
     </div>
   
@@ -26,6 +27,7 @@
     <div class="add-card-area">
       <ng-container *ngIf="!showAddCardForm; else cardForm">
         <button class="btn-add-card" (click)="toggleAddCardForm()">+ Add Card</button>
+        <button class="btn-del-card" (click)="onDeleteList()">delete</button> <!-- 🔥 new -->
       </ng-container>
   
       <ng-template #cardForm>

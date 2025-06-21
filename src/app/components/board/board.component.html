@@ -38,6 +38,7 @@
         [list]="list"
         [cards]="cardsMap[list.id!]"
         [connectedDropLists]="getDropListIds()"
+        (deleteList)="onDeleteList($event)"
       ></app-list>
     </div>
   </div>

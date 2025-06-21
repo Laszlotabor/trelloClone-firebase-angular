@@ -130,4 +130,12 @@ export class BoardComponent implements OnInit {
       await this.cardService.updateCardListChange(movedCard, targetListId);
     }
   }
+  async onDeleteList(listId: string): Promise<void> {
+    // Remove from backend
+    await this.listService.deleteList(listId);
+
+    // Remove from local lists
+    this.lists = this.lists.filter((list) => list.id !== listId);
+    delete this.cardsMap[listId];
+  }
 }

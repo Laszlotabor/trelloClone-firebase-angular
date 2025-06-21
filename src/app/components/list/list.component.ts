@@ -20,6 +20,8 @@ export class ListComponent implements OnInit {
   @Input() cards: Card[] = [];
   @Input() connectedDropLists: string[] = [];
 
+  @Output() deleteList = new EventEmitter<string>(); // 🔥 new
+
   @Output() cardDropped = new EventEmitter<{
     event: CdkDragDrop<Card[]>;
     listId: string;
@@ -65,5 +67,12 @@ export class ListComponent implements OnInit {
 
   onCardDrop(event: CdkDragDrop<Card[]>): void {
     this.cardDropped.emit({ event, listId: this.list.id! });
+  }
+
+  onDeleteList(): void {
+    const confirmed = confirm(`Delete list "${this.list.title}"?`);
+    if (confirmed) {
+      this.deleteList.emit(this.list.id!);
+    }
   }
 }
