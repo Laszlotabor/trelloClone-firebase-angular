@@ -2,17 +2,21 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { getAuth, onAuthStateChanged, User } from '@angular/fire/auth';
+
 
 import { Board } from '../../models/board.model';
 import { List } from '../../models/list.model';
 
+
 import { BoardServiceService } from '../../services/board-service.service';
 import { ListServiceService } from '../../services/list-service.service';
+import { ListComponent } from '../list/list.component';
 
 @Component({
   selector: 'app-board',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, ListComponent],
   templateUrl: './board.component.html',
   styleUrls: ['./board.component.scss'],
 })
@@ -21,15 +25,21 @@ export class BoardComponent implements OnInit {
   board: Board | null = null;
 
   lists: List[] = [];
+  userEmail: string = '';
 
   newListTitle: string = '';
   newListDescription: string = '';
 
   constructor(
-    private route: ActivatedRoute,
-    private boardService: BoardServiceService,
-    private listService: ListServiceService
-  ) {}
+  private route: ActivatedRoute,
+  private boardService: BoardServiceService,
+  private listService: ListServiceService
+) {
+  const auth = getAuth();
+  onAuthStateChanged(auth, (user: User | null) => {
+    this.userEmail = user?.email || 'Guest';
+  });
+}
 
   ngOnInit(): void {
     this.boardId = this.route.snapshot.paramMap.get('id')!;
@@ -55,7 +65,6 @@ export class BoardComponent implements OnInit {
       createdAt: Date.now(),
       position: Date.now(), // ✅ or use lists.length
     };
-    
 
     await this.listService.createList(newList);
     this.newListTitle = '';

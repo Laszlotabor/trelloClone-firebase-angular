@@ -1,0 +1,50 @@
+@use '../../../variables' as *;
+
+.list-column {
+    background-color: $dark-blue;
+    border: 1px solid $light-dark-blue;
+    border-radius: 8px;
+    padding: 1rem;
+    width: 260px;
+    min-height: 120px;
+    margin-right: 1rem;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.list-column  {
+    font-size: 2rem;
+    font-weight: bold;
+    color: $bright-blue;
+    margin: 0;
+}
+
+.list-column p {
+    margin: 0;
+    font-size: 0.95rem;
+    color: $more-bright-blue;
+}
+
+.add-card-btn {
+    margin-top: 0.5rem;
+    background-color: $mid-blue;
+    color: white;
+    border: none;
+    padding: 0.4rem 0.6rem;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+
+    &:hover {
+        background-color: $light-dark-blue;
+    }
+}
+
+.empty {
+    font-size: 0.8rem;
+    color: $more-bright-blue;
+    font-style: italic;
+}

@@ -1,10 +1,16 @@
 <div class="board-container" *ngIf="board">
+  <!-- Top Section: Header and Form (1/5 of viewport) -->
+  <div class="top-section">
     <!-- Board Header -->
     <div class="board-header">
-      <h2>{{ board.title }}</h2>
-      <p *ngIf="board.description">{{ board.description }}</p>
+      <h2>Hello, {{ userEmail }}</h2>
+<p>
+  Welcome on board <strong>{{ board.title }}</strong>
+  <span *ngIf="board.description"> that was created for <em>{{ board.description }}</em></span>.
+</p>
+
     </div>
-  
+
     <!-- Create List Form -->
     <form class="create-list-form" (submit)="createList(); $event.preventDefault()">
       <input
@@ -18,23 +24,19 @@
         name="description"
         placeholder="Optional description"
         [(ngModel)]="newListDescription"
+        rows="1"
       ></textarea>
       <button type="submit">Add List</button>
     </form>
-  
-    <!-- Lists Display -->
-    <div class="lists-wrapper">
-      <div class="list-column" *ngFor="let list of lists">
-        <h4>{{ list.title }}</h4>
-        <p *ngIf="list.description">{{ list.description }}</p>
-  
-        <!-- Cards will go here later -->
-        <p class="empty">[Cards coming soon]</p>
-      </div>
-    </div>
+    
   </div>
-  
-  <ng-template #loading>
-    <p>Loading board...</p>
-  </ng-template>
-  
+
+  <!-- Lists Section (4/5 of viewport) -->
+  <div class="lists-wrapper">
+    <app-list *ngFor="let list of lists" [list]="list"></app-list>
+  </div>
+</div>
+
+<ng-template #loading>
+  <p>Loading board...</p>
+</ng-template>
