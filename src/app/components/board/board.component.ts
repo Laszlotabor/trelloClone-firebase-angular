@@ -19,13 +19,21 @@ import { BoardServiceService } from '../../services/board-service.service';
 import { ListServiceService } from '../../services/list-service.service';
 import { CardserviceService } from '../../services/cardservice.service';
 
+
 import { ListComponent } from '../list/list.component';
 import { ShareBoardComponent } from '../shareboard-component/shareboard-component.component';
+import { AuthServiceService } from '../../services/auth-service.service';
 
 @Component({
   selector: 'app-board',
   standalone: true,
-  imports: [CommonModule, FormsModule, ListComponent, DragDropModule, ShareBoardComponent],
+  imports: [
+    CommonModule,
+    FormsModule,
+    ListComponent,
+    DragDropModule,
+    ShareBoardComponent,
+  ],
   templateUrl: './board.component.html',
   styleUrls: ['./board.component.scss'],
 })
@@ -46,7 +54,8 @@ export class BoardComponent implements OnInit {
     private boardService: BoardServiceService,
     private listService: ListServiceService,
     private cardService: CardserviceService,
-    private router: Router
+    private router: Router,
+    private authService: AuthServiceService
   ) {
     const auth = getAuth();
     onAuthStateChanged(auth, (user: User | null) => {
@@ -97,8 +106,13 @@ export class BoardComponent implements OnInit {
   }
 
   async deleteBoard(): Promise<void> {
-    const confirmed = confirm(`Delete board "${this.board?.title}"?`);
-    if (!confirmed || !this.board) return;
+    if (!this.board || this.authService.currentUserId !== this.board.owner) {
+      alert('Only the board owner can delete this board.');
+      return;
+    }
+
+    const confirmed = confirm(`Delete board "${this.board.title}"?`);
+    if (!confirmed) return;
 
     await this.boardService.deleteBoard(this.board.id!);
     this.router.navigate(['/boards']);

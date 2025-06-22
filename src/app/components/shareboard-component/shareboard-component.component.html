@@ -9,10 +9,20 @@
     <button type="submit">Share</button>
   </form>
   
-  <div *ngIf="board.allowedUsers?.length">
+  <div *ngIf="board?.allowedUsers?.length">
     <h4>Shared with:</h4>
     <ul>
-      <li *ngFor="let email of board.allowedUsers">{{ email }}</li>
+      <li *ngFor="let email of board.allowedUsers">
+        {{ email }}
+        <button
+          *ngIf="authService.currentUserId === board.owner"
+          (click)="removeAllowedUser(email)"
+          class="btn-remove"
+        >
+          Uninvite
+        </button>
+      </li>
     </ul>
   </div>
+  
   

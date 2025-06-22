@@ -17,8 +17,8 @@ export class ShareBoardComponent {
   newAllowedEmail = '';
 
   constructor(
-    private boardService: BoardServiceService,
-    private authService: AuthServiceService
+    public boardService: BoardServiceService,
+    public authService: AuthServiceService
   ) {}
 
   async addAllowedUser(): Promise<void> {
@@ -28,7 +28,6 @@ export class ShareBoardComponent {
     this.board.allowedUsers ??= [];
 
     if (this.board.allowedUsers.includes(email)) return;
-
 
     const isValid = await this.authService.isRegisteredUser(email);
     if (!isValid) {
@@ -42,5 +41,19 @@ export class ShareBoardComponent {
     });
     this.board.allowedUsers = updatedUsers;
     this.newAllowedEmail = '';
+  }
+
+  async removeAllowedUser(email: string): Promise<void> {
+    if (this.authService.currentUserId !== this.board.owner) {
+      alert('Only the board owner can remove users.');
+      return;
+    }
+
+    const updatedUsers = this.board.allowedUsers.filter((u) => u !== email);
+    await this.boardService.updateBoard(this.board.id!, {
+      allowedUsers: updatedUsers,
+    });
+
+    this.board.allowedUsers = updatedUsers;
   }
 }
