@@ -14,8 +14,8 @@
       [cdkDropListConnectedTo]="connectedDropLists"
       (cdkDropListDropped)="onCardDrop($event)"
     >
-      <div *ngIf="cards.length === 0" class="empty">No cards yet</div>
-  
+    <div *ngIf="cards?.length === 0" class="empty">No cards yet</div>
+
       <app-card
         *ngFor="let card of cards"
         [card]="card"
