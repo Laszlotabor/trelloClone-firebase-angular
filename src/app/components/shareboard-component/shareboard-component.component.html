@@ -27,6 +27,7 @@
   
       <!-- List of invited users -->
       <div *ngIf="board?.allowedUsers?.length">
+        <p>only board-owner allowed to -</p>
         <h4>Shared with:</h4>
         <ul>
           <li *ngFor="let email of board.allowedUsers">
