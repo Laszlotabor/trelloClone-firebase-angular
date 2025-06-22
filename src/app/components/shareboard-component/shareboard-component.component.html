@@ -1,28 +1,34 @@
-<form (submit)="addAllowedUser(); $event.preventDefault()">
-    <input
-      type="email"
-      [(ngModel)]="newAllowedEmail"
-      name="allowedEmail"
-      placeholder="Enter email to share with"
-      required
-    />
-    <button type="submit">Share</button>
-  </form>
+<div class="share-board">
+    <!-- Show form only if user is the owner -->
+    <form
+      *ngIf="authService.currentUserId === board?.owner"
+      (submit)="addAllowedUser(); $event.preventDefault()"
+    >
+      <input
+        type="email"
+        [(ngModel)]="newAllowedEmail"
+        name="allowedEmail"
+        placeholder="Enter email to share with"
+        required
+      />
+      <button type="submit">Share</button>
+    </form>
   
-  <div *ngIf="board?.allowedUsers?.length">
-    <h4>Shared with:</h4>
-    <ul>
-      <li *ngFor="let email of board.allowedUsers">
-        {{ email }}
-        <button
-          *ngIf="authService.currentUserId === board.owner"
-          (click)="removeAllowedUser(email)"
-          class="btn-remove"
-        >
-          Uninvite
-        </button>
-      </li>
-    </ul>
+    <!-- Show shared users -->
+    <div *ngIf="board?.allowedUsers?.length">
+      <h4>Shared with:</h4>
+      <ul>
+        <li *ngFor="let email of board.allowedUsers">
+          <span class="email">{{ email }}</span>
+          <button
+            *ngIf="authService.currentUserId === board.owner"
+            (click)="removeAllowedUser(email)"
+            class="remove-btn"
+          >
+            Uninvite
+          </button>
+        </li>
+      </ul>
+    </div>
   </div>
-  
   

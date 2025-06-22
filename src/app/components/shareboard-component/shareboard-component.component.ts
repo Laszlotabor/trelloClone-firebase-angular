@@ -22,6 +22,11 @@ export class ShareBoardComponent {
   ) {}
 
   async addAllowedUser(): Promise<void> {
+    if (this.board.owner !== this.authService.currentUserId) {
+      alert('Only the board owner can share the board.');
+      return;
+    }
+
     const email = this.newAllowedEmail.trim().toLowerCase();
     if (!email) return;
 
@@ -39,6 +44,7 @@ export class ShareBoardComponent {
     await this.boardService.updateBoard(this.board.id!, {
       allowedUsers: updatedUsers,
     });
+
     this.board.allowedUsers = updatedUsers;
     this.newAllowedEmail = '';
   }

@@ -1,8 +1,84 @@
-.btn-remove {
-    margin-left: 10px;
-    color: red;
-    cursor: pointer;
-    background: none;
-    border: none;
-  }
-  
+@use '../../../variables' as *;
+
+.share-board {
+    background-color: $light-dark-blue;
+    border: 1px solid $mid-blue;
+    border-radius: 8px;
+    padding: 1rem;
+    margin-top: 1rem;
+    color: white;
+    font-family: sans-serif;
+
+    form {
+        display: flex;
+        gap: 0.5rem;
+        margin-bottom: 1rem;
+
+        input {
+            flex: 1;
+            padding: 0.5rem;
+            border: 1px solid $more-bright-blue;
+            border-radius: 4px;
+            background-color: $dark-blue;
+            color: white;
+
+            &::placeholder {
+                color: $more-bright-blue;
+            }
+        }
+
+        button {
+            padding: 0.5rem 1rem;
+            background-color: $bright-blue;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+
+            &:hover {
+                background-color: $mid-blue;
+            }
+        }
+    }
+
+    h4 {
+        margin-bottom: 0.5rem;
+        color: $more-bright-blue;
+    }
+
+    ul {
+        list-style: none;
+        padding: 0;
+
+        li {
+            background-color: $dark-blue;
+            border: 1px solid $mid-blue;
+            border-radius: 4px;
+            padding: 0.5rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            .email {
+                color: white;
+                font-weight: bold;
+            }
+
+            .remove-btn {
+                background-color: transparent;
+                color: $bright-blue;
+                border: none;
+                cursor: pointer;
+                font-size: 0.9rem;
+                padding: 0.2rem 0.5rem;
+                transition: color 0.2s ease;
+
+                &:hover {
+                    color: $more-bright-blue;
+                }
+            }
+        }
+    }
+}
