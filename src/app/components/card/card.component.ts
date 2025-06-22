@@ -19,6 +19,7 @@ export class CardComponent {
   editableDescription = '';
 
   @Output() cardChanged = new EventEmitter<void>(); // 👈 Add this at the top
+  @Output() cardDeleted = new EventEmitter<string>();
 
   constructor(private cardService: CardserviceService) {}
 
@@ -47,7 +48,7 @@ export class CardComponent {
   async deleteCard(): Promise<void> {
     if (confirm('Are you sure you want to delete this card?')) {
       await this.cardService.deleteCard(this.card);
-      this.cardChanged.emit(); // 👈 Tell parent to refresh
+      this.cardDeleted.emit(this.card.id!); // 👈 Emit the deleted card ID
     }
   }
 }

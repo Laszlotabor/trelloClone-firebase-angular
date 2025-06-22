@@ -20,8 +20,7 @@ export class ListComponent implements OnInit {
   @Input() cards: Card[] = [];
   @Input() connectedDropLists: string[] = [];
 
-  @Output() deleteList = new EventEmitter<string>(); // 🔥 new
-
+  @Output() deleteList = new EventEmitter<string>();
   @Output() cardDropped = new EventEmitter<{
     event: CdkDragDrop<Card[]>;
     listId: string;
@@ -33,9 +32,7 @@ export class ListComponent implements OnInit {
 
   constructor(private cardService: CardserviceService) {}
 
-  ngOnInit(): void {
-    // cards are provided from parent via [cards] input
-  }
+  ngOnInit(): void {}
 
   toggleAddCardForm(): void {
     this.showAddCardForm = !this.showAddCardForm;
@@ -62,7 +59,8 @@ export class ListComponent implements OnInit {
     this.newCardDescription = '';
     this.showAddCardForm = false;
 
-    this.cards.push(newCard); // Update local list immediately
+    // ✅ Reload cards to ensure the card has an ID from Firebase
+    this.cards = await this.cardService.getCardsByList(this.list.id!);
   }
 
   onCardDrop(event: CdkDragDrop<Card[]>): void {
@@ -74,5 +72,8 @@ export class ListComponent implements OnInit {
     if (confirmed) {
       this.deleteList.emit(this.list.id!);
     }
+  }
+  onCardDeleted(cardId: string): void {
+    this.cards = this.cards.filter((card) => card.id !== cardId);
   }
 }

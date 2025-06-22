@@ -19,6 +19,7 @@
       <app-card
         *ngFor="let card of cards"
         [card]="card"
+        (cardDeleted)="onCardDeleted($event)"
         cdkDrag
       ></app-card>
     </div>
