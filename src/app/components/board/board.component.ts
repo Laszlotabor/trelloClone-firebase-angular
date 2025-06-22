@@ -134,6 +134,11 @@ export class BoardComponent implements OnInit {
       );
     } else {
       const movedCard = event.previousContainer.data[event.previousIndex];
+
+      // 🛠 Clone BEFORE modifying
+      const originalCard = { ...movedCard };
+
+      // Update in-place for UI
       movedCard.listId = targetListId;
       movedCard.position = Date.now();
 
@@ -144,9 +149,14 @@ export class BoardComponent implements OnInit {
         event.currentIndex
       );
 
-      await this.cardService.updateCardListChange(movedCard, targetListId);
+      // ✅ Pass the original copy with old listId
+      await this.cardService.updateCardListChange(originalCard, targetListId);
+
+      // 🧠 Optional: reload lists to force a fresh state (if needed)
+      // await this.loadLists();
     }
   }
+
   async onDeleteList(listId: string): Promise<void> {
     // Remove from backend
     await this.listService.deleteList(listId);
