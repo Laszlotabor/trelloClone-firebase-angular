@@ -9,6 +9,7 @@ import {
   onAuthStateChanged,
   User,
 } from '@angular/fire/auth';
+import { Database, ref, set, get } from '@angular/fire/database';
 import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
@@ -16,6 +17,8 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class AuthServiceService {
   private auth: Auth = inject(Auth);
+  private db: Database = inject(Database); // 💡 Inject Firebase DB
+
   private userSubject = new BehaviorSubject<User | null>(null);
   user$ = this.userSubject.asObservable();
 
@@ -26,14 +29,33 @@ export class AuthServiceService {
   }
 
   // ✅ Google Sign-In
-  signInWithGoogle() {
+  async signInWithGoogle() {
     const provider = new GoogleAuthProvider();
-    return signInWithPopup(this.auth, provider);
+    const result = await signInWithPopup(this.auth, provider);
+    const user = result.user;
+
+    // Save user to DB
+    await set(ref(this.db, 'users/' + user.uid), {
+      email: user.email,
+    });
+
+    return result;
   }
 
   // ✅ Email/Password Sign-Up
-  signUpWithEmail(email: string, password: string) {
-    return createUserWithEmailAndPassword(this.auth, email, password);
+  async signUpWithEmail(email: string, password: string) {
+    const credential = await createUserWithEmailAndPassword(
+      this.auth,
+      email,
+      password
+    );
+    const user = credential.user;
+
+    await set(ref(this.db, 'users/' + user.uid), {
+      email: user.email,
+    });
+
+    return credential;
   }
 
   // ✅ Email/Password Sign-In
@@ -54,5 +76,16 @@ export class AuthServiceService {
   // ✅ Get current user object
   get currentUser(): User | null {
     return this.auth.currentUser;
+  }
+
+  // ✅ Check if a user is registered based on DB (NOT just Firebase Auth)
+  async isRegisteredUser(email: string): Promise<boolean> {
+    const snapshot = await get(ref(this.db, 'users'));
+    if (!snapshot.exists()) return false;
+
+    const users = snapshot.val();
+    return Object.values(users).some(
+      (user: any) => user.email?.toLowerCase() === email.toLowerCase()
+    );
   }
 }

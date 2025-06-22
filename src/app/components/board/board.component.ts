@@ -14,16 +14,18 @@ import { Board } from '../../models/board.model';
 import { List } from '../../models/list.model';
 import { Card } from '../../models/card.model';
 
+
 import { BoardServiceService } from '../../services/board-service.service';
 import { ListServiceService } from '../../services/list-service.service';
 import { CardserviceService } from '../../services/cardservice.service';
 
 import { ListComponent } from '../list/list.component';
+import { ShareBoardComponent } from '../shareboard-component/shareboard-component.component';
 
 @Component({
   selector: 'app-board',
   standalone: true,
-  imports: [CommonModule, FormsModule, ListComponent, DragDropModule],
+  imports: [CommonModule, FormsModule, ListComponent, DragDropModule, ShareBoardComponent],
   templateUrl: './board.component.html',
   styleUrls: ['./board.component.scss'],
 })

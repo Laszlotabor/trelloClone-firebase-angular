@@ -15,25 +15,7 @@
       </div>
     </div>
     <!-- Share Board Form -->
-<div class="share-board-form">
-  <form (submit)="addAllowedUser(); $event.preventDefault()">
-    <input
-      type="email"
-      [(ngModel)]="newAllowedEmail"
-      name="allowedEmail"
-      placeholder="Enter email to share with"
-      required
-    />
-    <button type="submit">Share</button>
-  </form>
-
-  <div *ngIf="board?.allowedUsers?.length">
-    <h4>Shared with:</h4>
-    <ul>
-      <li *ngFor="let email of board.allowedUsers">{{ email }}</li>
-    </ul>
-  </div>
-</div>
+    <app-share-board [board]="board"></app-share-board>
 
 
     <!-- Create List Form -->
