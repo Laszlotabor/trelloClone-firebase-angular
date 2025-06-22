@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+
 import { Board } from '../../models/board.model';
 import { BoardServiceService } from '../../services/board-service.service';
 import { AuthServiceService } from '../../services/auth-service.service';
@@ -14,12 +15,18 @@ import { AuthServiceService } from '../../services/auth-service.service';
 })
 export class ShareBoardComponent {
   @Input() board!: Board;
+
   newAllowedEmail = '';
+  showShareBoard = false; // ✅ Unified toggle
 
   constructor(
     public boardService: BoardServiceService,
     public authService: AuthServiceService
   ) {}
+
+  toggleShare(): void {
+    this.showShareBoard = !this.showShareBoard;
+  }
 
   async addAllowedUser(): Promise<void> {
     if (this.board.owner !== this.authService.currentUserId) {

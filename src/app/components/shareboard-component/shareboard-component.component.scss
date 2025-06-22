@@ -1,24 +1,31 @@
 @use '../../../variables' as *;
 
 .share-board {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 9999; // Make it appear above all
     background-color: $light-dark-blue;
-    border: 1px solid $mid-blue;
-    border-radius: 8px;
-    padding: 1rem;
-    margin-top: 1rem;
+    border: 2px solid $mid-blue;
+    border-radius: 10px;
+    padding: 2rem;
+    width: 90%;
+    max-width: 400px;
     color: white;
     font-family: sans-serif;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
 
     form {
         display: flex;
         gap: 0.5rem;
-        margin-bottom: 1rem;
+        margin-bottom: 1.5rem;
 
         input {
             flex: 1;
-            padding: 0.5rem;
+            padding: 0.6rem;
             border: 1px solid $more-bright-blue;
-            border-radius: 4px;
+            border-radius: 5px;
             background-color: $dark-blue;
             color: white;
 
@@ -28,11 +35,11 @@
         }
 
         button {
-            padding: 0.5rem 1rem;
+            padding: 0.6rem 1rem;
             background-color: $bright-blue;
             color: white;
             border: none;
-            border-radius: 4px;
+            border-radius: 5px;
             cursor: pointer;
             transition: background-color 0.2s ease;
 
@@ -50,12 +57,14 @@
     ul {
         list-style: none;
         padding: 0;
+        max-height: 200px;
+        overflow-y: auto;
 
         li {
             background-color: $dark-blue;
             border: 1px solid $mid-blue;
-            border-radius: 4px;
-            padding: 0.5rem;
+            border-radius: 5px;
+            padding: 0.6rem;
             margin-bottom: 0.5rem;
             display: flex;
             justify-content: space-between;
@@ -72,7 +81,7 @@
                 border: none;
                 cursor: pointer;
                 font-size: 0.9rem;
-                padding: 0.2rem 0.5rem;
+                padding: 0.3rem 0.6rem;
                 transition: color 0.2s ease;
 
                 &:hover {
@@ -81,4 +90,5 @@
             }
         }
     }
+
 }
