@@ -1,3 +1,6 @@
+# My attempt to create a trello-like board system...obviously under construction forever....using scss variables file already and full firebase support
+
+
 # Taskmaster
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.0.5.
