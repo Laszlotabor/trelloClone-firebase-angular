@@ -8,8 +8,8 @@ import { BoardComponent } from './components/board/board.component';
 
 export const routes: Routes = [
   { path: 'home', component: HomeComponent }, // 👈 removed canActivate
-  { path: 'boards', component: BoardsComponent },
-  { path: 'board/:id', component: BoardComponent },
+  { path: 'boards', component: BoardsComponent, canActivate: [AuthGuard] },
+  { path: 'board/:id', component: BoardComponent, canActivate: [AuthGuard] },
 
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },

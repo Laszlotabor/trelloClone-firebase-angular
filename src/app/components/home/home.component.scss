@@ -43,3 +43,46 @@
         margin-bottom: 1.5rem;
     }
 }
+
+.button-group {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+.btn {
+    padding: 0.75rem 2rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 12px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    text-align: center;
+    min-width: 140px;
+}
+
+.fancy-btn {
+    background: linear-gradient(135deg, $mid-blue, $light-dark-blue);
+    color: white;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+
+    &:hover {
+        background: linear-gradient(135deg, lighten($mid-blue, 10%), lighten($light-dark-blue, 10%));
+        transform: translateY(-2px);
+        box-shadow: 0 12px 25px rgba(0, 0, 0, 0.25);
+    }
+
+    &.outline {
+        background: white;
+        color: $mid-blue;
+        border: 2px solid $mid-blue;
+
+        &:hover {
+            background: $mid-blue;
+            color: white;
+        }
+    }
+}
