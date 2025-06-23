@@ -20,14 +20,14 @@ export class LoginComponent {
   login() {
     this.auth
       .signInWithEmail(this.email, this.password)
-      .then(() => this.router.navigate(['/home']))
+      .then(() => this.router.navigate(['/boards']))
       .catch((err) => alert(err.message || 'Login failed.'));
   }
 
   loginWithGoogle() {
     this.auth
       .signInWithGoogle()
-      .then(() => this.router.navigate(['/home']))
+      .then(() => this.router.navigate(['/boards']))
       .catch((err) => alert(err.message || 'Google sign-in failed.'));
   }
 }
