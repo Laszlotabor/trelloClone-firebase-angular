@@ -1,8 +1,7 @@
 <div class="card">
-  <div class="card-content">
+  <div class="card-header">
     <h4 class="card-title">{{ card.title }}</h4>
     <p class="card-description" *ngIf="card.description">{{ card.description }}</p>
-   
   </div>
 
   <div class="card-actions">
@@ -12,10 +11,8 @@
     <input type="file" #fileInput (change)="onImageSelected($event)" hidden />
   </div>
 
-  <!-- Optional image preview -->
-<img *ngIf="card.imageUrl" [src]="card.imageUrl" class="card-image-preview" />
+  <img *ngIf="card.imageUrl" [src]="card.imageUrl" class="card-image-preview" />
 
-  <!-- Optional: Inline Edit Mode -->
   <div *ngIf="isEditing" class="edit-form">
     <input [(ngModel)]="editableTitle" placeholder="Title" />
     <textarea [(ngModel)]="editableDescription" rows="2" placeholder="Description"></textarea>

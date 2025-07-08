@@ -6,41 +6,36 @@
     border-radius: 8px;
     padding: 1rem;
     width: 260px;
-    min-height: 120px;
+    max-height: 70vh; // adjust as needed
     margin-right: 1rem;
     color: white;
+
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
+    overflow: hidden;
 }
 
-.list-column  {
+.list-header {
     font-size: 2rem;
     font-weight: bold;
     color: $bright-blue;
     margin: 0;
 }
 
-.list-column p {
+.list-header p {
     margin: 0;
     font-size: 0.95rem;
     color: $more-bright-blue;
 }
 
-.add-card-btn {
-    margin-top: 0.5rem;
-    background-color: $mid-blue;
-    color: white;
-    border: none;
-    padding: 0.4rem 0.6rem;
-    border-radius: 4px;
-    font-size: 0.85rem;
-    cursor: pointer;
-    transition: background-color 0.2s ease-in-out;
-
-    &:hover {
-        background-color: $light-dark-blue;
-    }
+.cards-area {
+    flex-grow: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding-right: 0.25rem; // space for scrollbar
 }
 
 .empty {
@@ -48,8 +43,9 @@
     color: $more-bright-blue;
     font-style: italic;
 }
+
 .add-card-area {
-    margin-top: 0.5rem;
+    margin-top: auto;
 }
 
 .btn-add-card {
@@ -67,6 +63,7 @@
         border-radius: 4px;
     }
 }
+
 .btn-del-card {
     background: none;
     border: none;

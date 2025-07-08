@@ -1,3 +1,15 @@
+.navbar {
+
+    position: sticky;
+    top: 0;
+    z-index: 1000; // Adjust the z-index value as needed
+    
+    height: 60px;
+
+      }
+
+
+
 .logout-link {
     cursor: pointer;
 
