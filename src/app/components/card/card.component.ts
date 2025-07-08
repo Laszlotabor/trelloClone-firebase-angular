@@ -3,6 +3,9 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Card } from '../../models/card.model';
 import { CardserviceService } from '../../services/cardservice.service';
+// ✅ Correct
+import { Storage, getDownloadURL, ref, uploadBytes } from '@angular/fire/storage';
+
 
 @Component({
   selector: 'app-card',
@@ -21,7 +24,30 @@ export class CardComponent {
   @Output() cardChanged = new EventEmitter<void>(); // 👈 Add this at the top
   @Output() cardDeleted = new EventEmitter<string>();
 
-  constructor(private cardService: CardserviceService) {}
+  constructor(
+    private cardService: CardserviceService,
+    private storage: Storage // ✅ AngularFire Storage instance
+  ) {}
+
+  async onImageSelected(event: Event): Promise<void> {
+    const file = (event.target as HTMLInputElement).files?.[0];
+    if (!file || !this.card.id) return;
+
+    const fileRef = ref(
+      this.storage,
+      `card-images/${this.card.id}/${file.name}`
+    );
+
+    try {
+      await uploadBytes(fileRef, file);
+      const downloadURL = await getDownloadURL(fileRef);
+
+      this.card.imageUrl = downloadURL;
+      await this.cardService.updateCard(this.card);
+    } catch (err) {
+      console.error('Image upload failed:', err);
+    }
+  }
 
   startEditing(): void {
     this.editableTitle = this.card.title;

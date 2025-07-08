@@ -6,5 +6,6 @@ export interface Card {
   boardId: string;
   createdAt: number;
   position?: number;
-  updatedAt?: number; // 👈 Add this line
+  updatedAt?: number;
+  imageUrl?: string;
 }

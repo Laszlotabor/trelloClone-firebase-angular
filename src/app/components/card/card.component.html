@@ -1,22 +1,27 @@
 <div class="card">
-    <div class="card-content">
-      <h4 class="card-title">{{ card.title }}</h4>
-      <p class="card-description" *ngIf="card.description">{{ card.description }}</p>
-    </div>
-  
-    <div class="card-actions">
-      <button class="edit-btn" (click)="startEditing()">✏️</button>
-      <button class="delete-btn" (click)="deleteCard()">🗑️</button>
-    </div>
-  
-    <!-- Optional: Inline Edit Mode -->
-    <div *ngIf="isEditing" class="edit-form">
-      <input [(ngModel)]="editableTitle" placeholder="Title" />
-      <textarea [(ngModel)]="editableDescription" rows="2" placeholder="Description"></textarea>
-      <div class="edit-actions">
-        <button (click)="saveEdit()">Save</button>
-        <button (click)="cancelEdit()">Cancel</button>
-      </div>
+  <div class="card-content">
+    <h4 class="card-title">{{ card.title }}</h4>
+    <p class="card-description" *ngIf="card.description">{{ card.description }}</p>
+   
+  </div>
+
+  <div class="card-actions">
+    <button class="edit-btn" (click)="startEditing()">✏️</button>
+    <button class="delete-btn" (click)="deleteCard()">🗑️</button>
+    <button class="image-btn" (click)="fileInput.click()">🖼️</button>
+    <input type="file" #fileInput (change)="onImageSelected($event)" hidden />
+  </div>
+
+  <!-- Optional image preview -->
+<img *ngIf="card.imageUrl" [src]="card.imageUrl" class="card-image-preview" />
+
+  <!-- Optional: Inline Edit Mode -->
+  <div *ngIf="isEditing" class="edit-form">
+    <input [(ngModel)]="editableTitle" placeholder="Title" />
+    <textarea [(ngModel)]="editableDescription" rows="2" placeholder="Description"></textarea>
+    <div class="edit-actions">
+      <button (click)="saveEdit()">Save</button>
+      <button (click)="cancelEdit()">Cancel</button>
     </div>
   </div>
-  
+</div>
