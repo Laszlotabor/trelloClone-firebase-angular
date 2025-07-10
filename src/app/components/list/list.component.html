@@ -1,58 +1,59 @@
 <div class="list-column">
-    <!-- List Header -->
-    <div class="list-header">
-      <h2 class="list-title">{{ list.title }}</h2>
-      
-      <p class="list-description" *ngIf="list.description">{{ list.description }}</p>
-    </div>
-  
-    <!-- Cards Area with Drag/Drop -->
-    <div
-      class="cards-area"
-      cdkDropList
-      [cdkDropListData]="cards"
-      [cdkDropListConnectedTo]="connectedDropLists"
-      (cdkDropListDropped)="onCardDrop($event)"
-    >
+  <!-- List Header -->
+  <div class="list-header">
+    <h2 class="list-title">{{ list.title }}</h2>
+    <p class="list-description" *ngIf="list.description">
+      {{ list.description }}
+    </p>
+  </div>
+
+  <!-- Cards Area with Drag/Drop -->
+  <div
+    class="cards-area"
+    cdkDropList
+    [id]="'cdk-drop-list-' + list.id"
+    [cdkDropListData]="cards"
+    [cdkDropListConnectedTo]="connectedDropLists"
+    (cdkDropListDropped)="onCardDrop($event)"
+  >
     <div *ngIf="cards?.length === 0" class="empty">No cards yet</div>
 
-      <app-card
-        *ngFor="let card of cards"
-        [card]="card"
-        (cardDeleted)="onCardDeleted($event)"
-        cdkDrag
-      ></app-card>
-    </div>
-  
-    <!-- Add Card Form -->
-    <div class="add-card-area">
-      <ng-container *ngIf="!showAddCardForm; else cardForm">
-        <button class="btn-add-card" (click)="toggleAddCardForm()">+ Add Card</button>
-        <button class="btn-del-card" (click)="onDeleteList()">delete</button> <!-- 🔥 new -->
-      </ng-container>
-  
-      <ng-template #cardForm>
-        <div class="card-form-container">
-          <input
-            type="text"
-            [(ngModel)]="newCardTitle"
-            name="cardTitle"
-            placeholder="Card title"
-            required
-          />
-          <textarea
-            [(ngModel)]="newCardDescription"
-            name="cardDescription"
-            placeholder="Description (optional)"
-            rows="1"
-          ></textarea>
-  
-          <div class="form-actions">
-            <button (click)="createCard()">Add</button>
-            <button type="button" (click)="toggleAddCardForm()">×</button>
-          </div>
-        </div>
-      </ng-template>
-    </div>
+    <app-card
+      *ngFor="let card of cards"
+      [card]="card"
+      (cardDeleted)="onCardDeleted($event)"
+      cdkDrag
+    ></app-card>
   </div>
-  
+
+  <!-- Add Card Form -->
+  <div class="add-card-area">
+    <ng-container *ngIf="!showAddCardForm; else cardForm">
+      <button class="btn-add-card" (click)="toggleAddCardForm()">+ Add Card</button>
+      <button class="btn-del-card" (click)="onDeleteList()">delete</button>
+    </ng-container>
+  </div>
+
+  <ng-template #cardForm>
+    <div class="card-form-container">
+      <input
+        type="text"
+        [(ngModel)]="newCardTitle"
+        name="cardTitle"
+        placeholder="Card title"
+        required
+      />
+      <textarea
+        [(ngModel)]="newCardDescription"
+        name="cardDescription"
+        placeholder="Description (optional)"
+        rows="1"
+      ></textarea>
+
+      <div class="form-actions">
+        <button (click)="createCard()">Add</button>
+        <button type="button" (click)="toggleAddCardForm()">×</button>
+      </div>
+    </div>
+  </ng-template>
+</div>

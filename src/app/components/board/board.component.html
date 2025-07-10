@@ -13,45 +13,56 @@
         <button class="btn-back" (click)="goBack()">← Back to Boards</button>
         <button class="btn-delete-board" (click)="deleteBoard()">Delete Board</button>
       </div>
-
-
-      
     </div>
+
     <!-- Share Board Form -->
     <app-share-board [board]="board"></app-share-board>
 
-
     <!-- Create List Form -->
     <form class="create-list-form" (submit)="createList(); $event.preventDefault()">
-      <input type="text" placeholder="New list title" [(ngModel)]="newListTitle" name="title" required />
-      <textarea placeholder="Optional description" [(ngModel)]="newListDescription" name="description"></textarea>
+      <input
+        type="text"
+        placeholder="New list title"
+        [(ngModel)]="newListTitle"
+        name="title"
+        required
+      />
+      <textarea
+        placeholder="Optional description"
+        [(ngModel)]="newListDescription"
+        name="description"
+      ></textarea>
       <button type="submit">Add List</button>
     </form>
   </div>
 
-<!-- Lists Section with Drag-Drop -->
-<div
-  class="lists-wrapper"
-  cdkDropList
-  [cdkDropListData]="lists"
-  (cdkDropListDropped)="onListDrop($event)"
-  cdkDropListOrientation="horizontal"
->
-  <div
-    class="list-drag-item"
-    *ngFor="let list of lists"
-    cdkDrag
-    [cdkDragData]="list"
-  >
-    <app-list
-      [list]="list"
-      [cards]="cardsMap[list.id!]"
-      [connectedDropLists]="getDropListIds()"
-      (deleteList)="onDeleteList($event)"
-    ></app-list>
+  <!-- Lists Section with Drag-and-Drop -->
+  <div cdkDropListGroup>
+    <div
+      class="lists-wrapper"
+      cdkDropList
+      [cdkDropListData]="lists"
+      (cdkDropListDropped)="onListDrop($event)"
+      cdkDropListOrientation="horizontal"
+    >
+      <div
+        class="list-drag-item"
+        *ngFor="let list of lists"
+        cdkDrag
+        [cdkDragData]="list"
+      >
+        <app-list
+        [list]="list"
+        [cards]="cardsMap[list.id!]"
+        [connectedDropLists]="getDropListIds()"
+        (deleteList)="onDeleteList($event)"
+        (cardDropped)="onCardDrop($event.event, $event.listId)" 
+        ></app-list>
+        
+      </div>
+    </div>
   </div>
 </div>
-
 
 <ng-template #loading>
   <p>Loading board...</p>

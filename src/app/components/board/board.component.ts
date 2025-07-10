@@ -14,16 +14,13 @@ import { Board } from '../../models/board.model';
 import { List } from '../../models/list.model';
 import { Card } from '../../models/card.model';
 
-
 import { BoardServiceService } from '../../services/board-service.service';
 import { ListServiceService } from '../../services/list-service.service';
 import { CardserviceService } from '../../services/cardservice.service';
 
-
 import { ListComponent } from '../list/list.component';
 import { ShareBoardComponent } from '../shareboard-component/shareboard-component.component';
 import { AuthServiceService } from '../../services/auth-service.service';
-
 
 @Component({
   selector: 'app-board',
@@ -79,9 +76,9 @@ export class BoardComponent implements OnInit {
       (a, b) => a.position - b.position
     );
 
-
     for (const list of this.lists) {
       const cards = await this.cardService.getCardsByList(list.id!);
+      // Ensure we use this array instance for binding
       this.cardsMap[list.id!] = cards.sort(
         (a, b) => (a.position ?? 0) - (b.position ?? 0)
       );
@@ -125,12 +122,10 @@ export class BoardComponent implements OnInit {
   async onListDrop(event: CdkDragDrop<List[]>) {
     moveItemInArray(this.lists, event.previousIndex, event.currentIndex);
 
-    // Recalculate and persist new positions
     for (let i = 0; i < this.lists.length; i++) {
       const list = this.lists[i];
       const newPosition = i;
 
-      // Only update if position has changed
       if (list.position !== newPosition) {
         list.position = newPosition;
         await this.listService.updateList(list.id!, { position: newPosition });
@@ -152,49 +147,41 @@ export class BoardComponent implements OnInit {
         event.previousIndex,
         event.currentIndex
       );
-    } else {
-      const movedCard = event.previousContainer.data[event.previousIndex];
-
-      // 🛠 Clone BEFORE modifying
-      const originalCard = { ...movedCard };
-
-      // Update in-place for UI
-      movedCard.listId = targetListId;
-      movedCard.position = Date.now();
-
-      transferArrayItem(
-        event.previousContainer.data,
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex
-      );
-
-      // ✅ Pass the original copy with old listId
-      await this.cardService.updateCardListChange(originalCard, targetListId);
-
-      // 🧠 Optional: reload lists to force a fresh state (if needed)
-      // await this.loadLists();
+      return;
     }
+
+    // Move card in memory first
+    transferArrayItem(
+      event.previousContainer.data,
+      event.container.data,
+      event.previousIndex,
+      event.currentIndex
+    );
+
+    const movedCard = event.container.data[event.currentIndex];
+
+    // Update card data
+    movedCard.listId = targetListId;
+    movedCard.position = Date.now();
+
+    // Persist update
+    await this.cardService.updateCardListChange(movedCard, targetListId);
   }
 
   async onDeleteList(listId: string): Promise<void> {
-    // Remove from backend
     await this.listService.deleteList(listId);
-
-    // Remove from local lists
     this.lists = this.lists.filter((list) => list.id !== listId);
     delete this.cardsMap[listId];
   }
+
   async addAllowedUser(): Promise<void> {
     const email = this.newAllowedEmail.trim();
     if (!email || !this.board) return;
 
-    // Ensure allowedUsers is initialized
     if (!this.board.allowedUsers) {
       this.board.allowedUsers = [];
     }
 
-    // Only add if not already present
     if (!this.board.allowedUsers.includes(email)) {
       this.board.allowedUsers.push(email);
       await this.boardService.updateBoard(this.board.id!, {
