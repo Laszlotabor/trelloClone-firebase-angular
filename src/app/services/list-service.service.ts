@@ -1,6 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { Database, ref, push, set, get, remove } from '@angular/fire/database';
 import { List } from '../models/list.model';
+import { update } from '@angular/fire/database';
 
 @Injectable({
   providedIn: 'root',
@@ -38,4 +39,8 @@ export class ListServiceService {
   }
 
   // Optional: add updateList, deleteList etc. later
+  async updateList(listId: string, changes: Partial<List>): Promise<void> {
+    const listRef = ref(this.db, `lists/${listId}`);
+    await update(listRef, changes);
+  }
 }

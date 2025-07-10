@@ -105,6 +105,8 @@ $dark-blue: rgb(2, 15, 26);
     overflow-x: auto;
     padding-bottom: 1rem;
 }
+.list-drag-item {
+    flex-shrink: 0; }
 
 .header-actions {
     margin-top: 0.5rem;

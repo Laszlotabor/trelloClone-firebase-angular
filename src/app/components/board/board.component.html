@@ -29,26 +29,29 @@
     </form>
   </div>
 
-  <!-- Lists Section -->
-  <div class="lists-wrapper">
-    <div
-      class="list-drop-wrapper"
-      *ngFor="let list of lists"
-      cdkDropList
-      [id]="'cdk-drop-list-' + list.id"
-      [cdkDropListData]="cardsMap[list.id!]"
-      [cdkDropListConnectedTo]="getDropListIds()"
-      (cdkDropListDropped)="onCardDrop($event, list.id!)"
-    >
-      <app-list
-        [list]="list"
-        [cards]="cardsMap[list.id!]"
-        [connectedDropLists]="getDropListIds()"
-        (deleteList)="onDeleteList($event)"
-      ></app-list>
-    </div>
+<!-- Lists Section with Drag-Drop -->
+<div
+  class="lists-wrapper"
+  cdkDropList
+  [cdkDropListData]="lists"
+  (cdkDropListDropped)="onListDrop($event)"
+  cdkDropListOrientation="horizontal"
+>
+  <div
+    class="list-drag-item"
+    *ngFor="let list of lists"
+    cdkDrag
+    [cdkDragData]="list"
+  >
+    <app-list
+      [list]="list"
+      [cards]="cardsMap[list.id!]"
+      [connectedDropLists]="getDropListIds()"
+      (deleteList)="onDeleteList($event)"
+    ></app-list>
   </div>
 </div>
+
 
 <ng-template #loading>
   <p>Loading board...</p>

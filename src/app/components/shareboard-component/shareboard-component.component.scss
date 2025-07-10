@@ -118,6 +118,12 @@
 
 }
 .togglebutton {
-    margin-top: 12px;
+    margin-top: 19px;
+    background: none;
+        color: white;
+        border: none;
+
+        &:hover {
+                color:$light-dark-blue;     }
 }
 

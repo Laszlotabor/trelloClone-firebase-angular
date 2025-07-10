@@ -24,6 +24,7 @@ import { ListComponent } from '../list/list.component';
 import { ShareBoardComponent } from '../shareboard-component/shareboard-component.component';
 import { AuthServiceService } from '../../services/auth-service.service';
 
+
 @Component({
   selector: 'app-board',
   standalone: true,
@@ -74,7 +75,10 @@ export class BoardComponent implements OnInit {
   }
 
   async loadLists(): Promise<void> {
-    this.lists = await this.listService.getListsByBoard(this.boardId);
+    this.lists = (await this.listService.getListsByBoard(this.boardId)).sort(
+      (a, b) => a.position - b.position
+    );
+
 
     for (const list of this.lists) {
       const cards = await this.cardService.getCardsByList(list.id!);
@@ -116,6 +120,22 @@ export class BoardComponent implements OnInit {
 
     await this.boardService.deleteBoard(this.board.id!);
     this.router.navigate(['/boards']);
+  }
+
+  async onListDrop(event: CdkDragDrop<List[]>) {
+    moveItemInArray(this.lists, event.previousIndex, event.currentIndex);
+
+    // Recalculate and persist new positions
+    for (let i = 0; i < this.lists.length; i++) {
+      const list = this.lists[i];
+      const newPosition = i;
+
+      // Only update if position has changed
+      if (list.position !== newPosition) {
+        list.position = newPosition;
+        await this.listService.updateList(list.id!, { position: newPosition });
+      }
+    }
   }
 
   getDropListIds(): string[] {
