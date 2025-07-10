@@ -11,7 +11,17 @@
     <input type="file" #fileInput (change)="onImageSelected($event)" hidden />
   </div>
 
-  <img *ngIf="card.imageUrl" [src]="card.imageUrl" class="card-image-preview" />
+    <!-- Image wrapper with delete X -->
+  <div class="image-wrapper" *ngIf="card.imageUrl">
+    <img [src]="card.imageUrl" class="card-image-preview"  (dblclick)="openImageModal()" />
+    <button class="delete-image-btn" (click)="removeImage()">✖</button>
+  </div>
+
+  <!-- Image Modal -->
+<div class="image-modal" *ngIf="isImageModalOpen" (click)="closeImageModal()">
+  <img [src]="card.imageUrl" class="modal-image" />
+</div>
+
 
   <div *ngIf="isEditing" class="edit-form">
     <input [(ngModel)]="editableTitle" placeholder="Title" />

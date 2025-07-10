@@ -20,7 +20,9 @@ export class CardComponent {
   isEditing = false;
   editableTitle = '';
   editableDescription = '';
-
+  
+  isImageModalOpen = false;
+  
   @Output() cardChanged = new EventEmitter<void>(); // 👈 Add this at the top
   @Output() cardDeleted = new EventEmitter<string>();
 
@@ -53,6 +55,26 @@ export class CardComponent {
     this.editableTitle = this.card.title;
     this.editableDescription = this.card.description || '';
     this.isEditing = true;
+  }
+
+  removeImage() {
+    const confirmDelete = confirm(
+      'Are you sure you want to remove this image?'
+    );
+    if (confirmDelete) {
+      this.card.imageUrl = '';
+      // Optionally sync with backend here
+    }
+  }
+
+  
+
+  openImageModal() {
+    this.isImageModalOpen = true;
+  }
+
+  closeImageModal() {
+    this.isImageModalOpen = false;
   }
 
   cancelEdit(): void {

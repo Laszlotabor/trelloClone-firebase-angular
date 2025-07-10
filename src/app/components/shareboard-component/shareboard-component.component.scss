@@ -16,10 +16,32 @@
     font-family: sans-serif;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
 
+    .close-x {
+            position: absolute;
+            top: 10px;
+            right: 14px;
+            background: transparent !important;
+            border: none !important;
+            padding: 0;
+            margin: 0;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: $bright-blue;
+            line-height: 1;
+            cursor: pointer;
+            appearance: none;
+            box-shadow: none;
+    
+            &:hover {
+                color: red;
+            }
+        }
+
     form {
         display: flex;
         gap: 0.5rem;
         margin-bottom: 1.5rem;
+        padding-top: 10px;
 
         input {
             flex: 1;
@@ -47,6 +69,8 @@
                 background-color: $mid-blue;
             }
         }
+
+           
     }
 
     h4 {
@@ -96,3 +120,4 @@
 .togglebutton {
     margin-top: 12px;
 }
+

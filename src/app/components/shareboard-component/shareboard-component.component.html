@@ -10,6 +10,10 @@
   
     <!-- Share Panel -->
     <div class="share-board" *ngIf="showShareBoard">
+
+      <button class="close-x" (click)="toggleShare()" aria-label="Close Share Panel">
+        x
+      </button>
       <!-- Add user form (only owner) -->
       <form
         *ngIf="authService.currentUserId === board?.owner"
