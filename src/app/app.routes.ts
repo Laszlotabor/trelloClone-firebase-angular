@@ -5,11 +5,13 @@ import { RegisterComponent } from './components/register/register.component';
 import { AuthGuard } from './guards/auth.guard';
 import { BoardsComponent } from './components/boards/boards.component';
 import { BoardComponent } from './components/board/board.component';
+import { CardDetailComponent } from './components/card-detail/card-detail.component';
 
 export const routes: Routes = [
   { path: 'home', component: HomeComponent }, // 👈 removed canActivate
   { path: 'boards', component: BoardsComponent, canActivate: [AuthGuard] },
   { path: 'board/:id', component: BoardComponent, canActivate: [AuthGuard] },
+  { path: 'card-detail/:id', component: CardDetailComponent, canActivate: [AuthGuard] },
 
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },

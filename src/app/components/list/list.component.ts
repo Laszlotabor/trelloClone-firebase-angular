@@ -7,11 +7,13 @@ import { List } from '../../models/list.model';
 import { Card } from '../../models/card.model';
 import { CardserviceService } from '../../services/cardservice.service';
 import { CardComponent } from '../card/card.component';
+import { CardDetailComponent } from '../card-detail/card-detail.component';
+
 
 @Component({
   selector: 'app-list',
   standalone: true,
-  imports: [CommonModule, FormsModule, CardComponent, DragDropModule],
+  imports: [CommonModule, FormsModule, CardComponent, DragDropModule,CardDetailComponent],
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss'],
 })
@@ -29,6 +31,7 @@ export class ListComponent implements OnInit {
   newCardTitle = '';
   newCardDescription = '';
   showAddCardForm = false;
+  selectedCard: Card | null = null;
 
   constructor(private cardService: CardserviceService) {}
 
@@ -75,5 +78,12 @@ export class ListComponent implements OnInit {
   }
   onCardDeleted(cardId: string): void {
     this.cards = this.cards.filter((card) => card.id !== cardId);
+  }
+  openCardDetail(card: Card) {
+    this.selectedCard = card;
+  }
+
+  closeCardDetail() {
+    this.selectedCard = null;
   }
 }

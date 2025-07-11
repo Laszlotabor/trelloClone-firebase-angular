@@ -16,13 +16,14 @@ import { Storage, getDownloadURL, ref, uploadBytes } from '@angular/fire/storage
 })
 export class CardComponent {
   @Input() card!: Card;
+  @Output() openDetail = new EventEmitter<void>();
 
   isEditing = false;
   editableTitle = '';
   editableDescription = '';
-  
+
   isImageModalOpen = false;
-  
+
   @Output() cardChanged = new EventEmitter<void>(); // 👈 Add this at the top
   @Output() cardDeleted = new EventEmitter<string>();
 
@@ -67,8 +68,6 @@ export class CardComponent {
     }
   }
 
-  
-
   openImageModal() {
     this.isImageModalOpen = true;
   }
@@ -97,6 +96,15 @@ export class CardComponent {
     if (confirm('Are you sure you want to delete this card?')) {
       await this.cardService.deleteCard(this.card);
       this.cardDeleted.emit(this.card.id!); // 👈 Emit the deleted card ID
+    }
+  }
+
+  onCardClicked(event: MouseEvent) {
+    // prevent click bubbling from buttons
+    const target = event.target as HTMLElement;
+    const isButton = target.closest('button') || target.tagName === 'BUTTON';
+    if (!isButton) {
+      this.openDetail.emit();
     }
   }
 }

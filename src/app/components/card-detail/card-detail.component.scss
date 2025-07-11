@@ -1,0 +1,60 @@
+@use '../../../variables' as *;
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.card-detail {
+    background: white;
+    padding: 2rem;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 600px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+
+    .close-btn {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        background: transparent;
+        border: none;
+        font-size: 1.5rem;
+        color: $dark-blue;
+        cursor: pointer;
+    }
+
+    .title {
+        font-size: 1.4rem;
+        font-weight: bold;
+        color: $dark-blue;
+    }
+
+    .description {
+        font-size: 1rem;
+        color: $light-dark-blue;
+    }
+
+    .detail-image {
+        max-width: 100%;
+        border-radius: 6px;
+    }
+
+    .coming-soon {
+        font-style: italic;
+        font-size: 0.9rem;
+        color: gray;
+    }
+}

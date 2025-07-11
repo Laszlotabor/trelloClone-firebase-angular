@@ -22,6 +22,7 @@
       *ngFor="let card of cards"
       [card]="card"
       (cardDeleted)="onCardDeleted($event)"
+      (openDetail)="openCardDetail(card)"  
       cdkDrag
     ></app-card>
   </div>
@@ -57,3 +58,10 @@
     </div>
   </ng-template>
 </div>
+
+<!-- ✅ Card Detail Modal -->
+<app-card-detail
+  *ngIf="selectedCard"
+  [card]="selectedCard"
+  (close)="closeCardDetail()"
+/>

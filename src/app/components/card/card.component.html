@@ -1,4 +1,5 @@
-<div class="card" cdkDrag>
+<div class="card" cdkDrag (click)="onCardClicked($event)">
+
   <div class="card-header">
     <h4 class="card-title">{{ card.title }}</h4>
     <p class="card-description" *ngIf="card.description">{{ card.description }}</p>
