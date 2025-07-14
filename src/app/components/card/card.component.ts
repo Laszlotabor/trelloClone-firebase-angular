@@ -22,7 +22,7 @@ export class CardComponent {
   editableTitle = '';
   editableDescription = '';
 
-  isImageModalOpen = false;
+ 
 
   @Output() cardChanged = new EventEmitter<void>(); // 👈 Add this at the top
   @Output() cardDeleted = new EventEmitter<string>();
@@ -68,13 +68,7 @@ export class CardComponent {
     }
   }
 
-  openImageModal() {
-    this.isImageModalOpen = true;
-  }
-
-  closeImageModal() {
-    this.isImageModalOpen = false;
-  }
+ 
 
   cancelEdit(): void {
     this.isEditing = false;
@@ -100,7 +94,6 @@ export class CardComponent {
   }
 
   onCardClicked(event: MouseEvent) {
-    // prevent click bubbling from buttons
     const target = event.target as HTMLElement;
     const isButton = target.closest('button') || target.tagName === 'BUTTON';
     if (!isButton) {

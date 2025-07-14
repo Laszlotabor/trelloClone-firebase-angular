@@ -19,12 +19,13 @@
     <div *ngIf="cards?.length === 0" class="empty">No cards yet</div>
 
     <app-card
-      *ngFor="let card of cards"
-      [card]="card"
-      (cardDeleted)="onCardDeleted($event)"
-      (openDetail)="openCardDetail(card)"  
-      cdkDrag
-    ></app-card>
+    *ngFor="let card of cards"
+    [card]="card"
+    (cardDeleted)="onCardDeleted($event)"
+    (openDetail)="openCardDetail(card)"
+    cdkDrag
+  ></app-card>
+  
   </div>
 
   <!-- Add Card Form -->

@@ -1,4 +1,5 @@
-<div class="overlay" (click)="onClose()">
+<div class="overlay" (click)="onOverlayClick()">
+    <!-- Card Detail -->
     <div class="card-detail" (click)="$event.stopPropagation()">
       <button class="close-btn" (click)="onClose()">✖</button>
   
@@ -10,12 +11,25 @@
         [src]="card.imageUrl"
         class="detail-image"
         alt="Card image"
+        (click)="openImageModal(); $event.stopPropagation()"
       />
   
-      <!-- Future: chat, checklists, etc. -->
       <div class="coming-soon">
         <p>💬 Chat, ⏰ Due Dates, 📌 Labels — coming soon!</p>
       </div>
+    </div>
+  
+    <!-- Fullscreen Image Modal -->
+    <div
+      class="image-modal"
+      *ngIf="isImageModalOpen"
+      (click)="closeImageModal(); $event.stopPropagation()"
+    >
+      <img
+        [src]="card.imageUrl"
+        class="modal-image"
+        (click)="$event.stopPropagation()"
+      />
     </div>
   </div>
   

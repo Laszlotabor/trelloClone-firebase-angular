@@ -18,7 +18,7 @@
     padding: 2rem;
     border-radius: 10px;
     width: 90%;
-    max-width: 600px;
+    max-width: 500px;
     position: relative;
     display: flex;
     flex-direction: column;
@@ -48,13 +48,38 @@
     }
 
     .detail-image {
-        max-width: 100%;
+        width: 180px; // ✅ Small fixed size
+        height: auto;
+        align-self: center;
         border-radius: 6px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
     }
 
     .coming-soon {
         font-style: italic;
         font-size: 0.9rem;
         color: gray;
+        text-align: center;
+    }
+}
+
+.image-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+
+    .modal-image {
+        max-width: 90vw;
+        max-height: 90vh;
+        border-radius: 8px;
+        box-shadow: 0 0 12px rgba(0, 0, 0, 0.6);
+        cursor: zoom-out;
     }
 }
