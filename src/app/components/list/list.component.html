@@ -21,8 +21,6 @@
     <app-card
     *ngFor="let card of cards"
     [card]="card"
-    (cardDeleted)="onCardDeleted($event)"
-    (openDetail)="openCardDetail(card)"
     cdkDrag
   ></app-card>
   

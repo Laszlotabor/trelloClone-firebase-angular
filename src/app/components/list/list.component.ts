@@ -8,7 +8,6 @@ import { Card } from '../../models/card.model';
 import { CardserviceService } from '../../services/cardservice.service';
 import { CardComponent } from '../card/card.component';
 
-
 @Component({
   selector: 'app-list',
   standalone: true,
@@ -30,7 +29,6 @@ export class ListComponent implements OnInit {
   newCardTitle = '';
   newCardDescription = '';
   showAddCardForm = false;
-  selectedCard: Card | null = null;
 
   constructor(private cardService: CardserviceService) {}
 
@@ -74,15 +72,5 @@ export class ListComponent implements OnInit {
     if (confirmed) {
       this.deleteList.emit(this.list.id!);
     }
-  }
-  onCardDeleted(cardId: string): void {
-    this.cards = this.cards.filter((card) => card.id !== cardId);
-  }
-  openCardDetail(card: Card) {
-    this.selectedCard = card;
-  }
-
-  closeCardDetail() {
-    this.selectedCard = null;
   }
 }

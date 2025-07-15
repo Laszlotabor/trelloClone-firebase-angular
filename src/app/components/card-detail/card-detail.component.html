@@ -1,0 +1,15 @@
+<button class="back-button" (click)="goBack()">← Back to Board</button>
+
+
+<div *ngIf="loading">Loading card...</div>
+
+<div *ngIf="!loading && card" class="card-detail-container">
+  <div class="card-image-wrapper" *ngIf="card.imageUrl">
+    <img [src]="card.imageUrl" alt="Card Image" />
+  </div>
+
+  <div class="card-text">
+    <h2>{{ card.title }}</h2>
+    <p *ngIf="card.description">{{ card.description }}</p>
+  </div>
+</div>

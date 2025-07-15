@@ -70,9 +70,20 @@ export class CardserviceService {
       listId: newListId,
       position: Date.now(),
       updatedAt: Date.now(),
-      
     };
 
     await update(cardRef, updatedCard);
+  }
+
+  async getCardById(cardId: string): Promise<Card | undefined> {
+    const cardRef = ref(this.db, `cards/${cardId}`);
+    const snapshot = await get(cardRef);
+
+    if (snapshot.exists()) {
+      const data = snapshot.val();
+      return { id: cardId, ...data };
+    }
+
+    return undefined;
   }
 }

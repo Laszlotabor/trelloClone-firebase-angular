@@ -1,41 +1,14 @@
 <div class="card" cdkDrag (click)="onCardClicked($event)">
-  <!-- Card Header -->
   <div class="card-header">
     <h4 class="card-title">{{ card.title }}</h4>
     <p class="card-description" *ngIf="card.description">{{ card.description }}</p>
   </div>
 
-  <!-- Action Buttons -->
-  <div class="card-actions">
-    <button class="edit-btn" (click)="startEditing(); $event.stopPropagation()">✏️</button>
-    <button class="delete-btn" (click)="deleteCard(); $event.stopPropagation()">🗑️</button>
-    <button class="image-btn" (click)="fileInput.click(); $event.stopPropagation()">🖼️</button>
-    <input type="file" #fileInput (change)="onImageSelected($event)" hidden />
-  </div>
-
-  <!-- Image with delete button -->
   <div class="image-wrapper" *ngIf="card.imageUrl" (click)="$event.stopPropagation()">
     <img
       [src]="card.imageUrl"
       class="card-image-preview"
-      
-      (click)="$event.stopPropagation()"
+      alt="Card Image"
     />
-    <button
-      class="delete-image-btn"
-      (click)="removeImage(); $event.stopPropagation()"
-    >✖</button>
-  </div>
-
-
-
-  <!-- Edit Form -->
-  <div *ngIf="isEditing" class="edit-form">
-    <input [(ngModel)]="editableTitle" placeholder="Title" />
-    <textarea [(ngModel)]="editableDescription" rows="2" placeholder="Description"></textarea>
-    <div class="edit-actions">
-      <button (click)="saveEdit()">Save</button>
-      <button (click)="cancelEdit()">Cancel</button>
-    </div>
   </div>
 </div>

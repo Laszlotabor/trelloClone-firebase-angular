@@ -1,0 +1,38 @@
+.card-detail-container {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 2rem;
+    padding: 2rem;
+}
+
+.card-image-wrapper {
+    flex-shrink: 0;
+
+    img {
+        max-height: 70vh;
+        width: auto;
+        border-radius: 8px;
+        object-fit: contain;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+}
+
+.card-text {
+    flex: 1;
+}
+
+.back-button {
+    margin: 1rem 2rem;
+    background-color: #eee;
+    border: none;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background 0.2s;
+
+    &:hover {
+        background-color: #ddd;
+    }
+}
