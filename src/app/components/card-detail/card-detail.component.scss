@@ -7,7 +7,7 @@
     z-index: 1000;
     width: 100vw;
     height: 100vh;
-    background: rgba(0, 0, 0, 0.7);
+    background: rgba(3, 19, 49, 0.3);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -18,7 +18,7 @@
     padding: 2rem;
     border-radius: 10px;
     width: 90%;
-    max-width: 500px;
+    max-width: 900px;
     position: relative;
     display: flex;
     flex-direction: column;
@@ -82,4 +82,19 @@
         box-shadow: 0 0 12px rgba(0, 0, 0, 0.6);
         cursor: zoom-out;
     }
+}
+
+.detail-section {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    margin-bottom: 1rem;
+}
+
+.section-label {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: $light-dark-blue;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
