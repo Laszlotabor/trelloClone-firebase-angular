@@ -12,4 +12,46 @@
     <h2>{{ card.title }}</h2>
     <p *ngIf="card.description">{{ card.description }}</p>
   </div>
+  <!-- Action Buttons -->
+<div class="card-actions mb-3">
+  <button class="btn btn-outline-primary me-2" (click)="startEditing()">
+    ✏️ Edit
+  </button>
+  <button class="btn btn-outline-danger me-2" (click)="deleteCard()">
+    🗑️ Delete
+  </button>
+  <button class="btn btn-outline-secondary" (click)="fileInput.click()">
+    🖼️ Add Image
+  </button>
+  <input type="file" #fileInput (change)="onImageSelected($event)" hidden />
+</div>
+
+<!-- Edit Form -->
+<div *ngIf="isEditing" class="edit-form border p-3 rounded bg-light">
+  <div class="mb-3">
+    <label class="form-label">Title</label>
+    <input
+      [(ngModel)]="editableTitle"
+      type="text"
+      class="form-control"
+      placeholder="Card title"
+    />
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label">Description</label>
+    <textarea
+      [(ngModel)]="editableDescription"
+      class="form-control"
+      rows="3"
+      placeholder="Card description"
+    ></textarea>
+  </div>
+
+  <div class="d-flex gap-2">
+    <button class="btn btn-success" (click)="saveEdit()">💾 Save</button>
+    <button class="btn btn-secondary" (click)="cancelEdit()">Cancel</button>
+  </div>
+</div>
+
 </div>
