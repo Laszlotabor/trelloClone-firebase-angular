@@ -7,13 +7,12 @@ import { List } from '../../models/list.model';
 import { Card } from '../../models/card.model';
 import { CardserviceService } from '../../services/cardservice.service';
 import { CardComponent } from '../card/card.component';
-import { CardDetailComponent } from '../card-detail/card-detail.component';
 
 
 @Component({
   selector: 'app-list',
   standalone: true,
-  imports: [CommonModule, FormsModule, CardComponent, DragDropModule,CardDetailComponent],
+  imports: [CommonModule, FormsModule, CardComponent, DragDropModule],
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss'],
 })
