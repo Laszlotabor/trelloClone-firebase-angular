@@ -1,0 +1,69 @@
+@use '../../../variables' as *;
+
+.workflow-container {
+    background-color: white;
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.workflow-title {
+    font-size: 1.75rem;
+    color: $dark-blue;
+    margin-bottom: 0.25rem;
+}
+
+.workflow-intro {
+    font-size: 1rem;
+    color: $light-dark-blue;
+    margin-bottom: 1rem;
+    line-height: 1.5;
+}
+
+.workflow-entry {
+    padding: 1.5rem;
+    border-left: 4px solid $bright-blue;
+    background-color: $more-bright-blue;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    transition: background-color 0.2s;
+
+    &:hover {
+        background-color: lighten($more-bright-blue, 4%);
+    }
+
+    .entry-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 0.85rem;
+        color: $light-dark-blue;
+
+        .entry-tag {
+            background-color: $bright-blue;
+            color: white;
+            padding: 0.2rem 0.6rem;
+            border-radius: 999px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+    }
+
+    .entry-title {
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: $dark-blue;
+        margin: 0.3rem 0;
+    }
+
+    .entry-body {
+        font-size: 0.95rem;
+        color: $light-dark-blue;
+        line-height: 1.5;
+    }
+}

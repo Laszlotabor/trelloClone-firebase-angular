@@ -28,23 +28,47 @@
 }
 
 .chat-message {
-    padding: 0.5rem;
-    background-color: $more-bright-blue;
-    border-radius: 8px;
+    max-width: 70%;
+    padding: 0.5rem 0.75rem;
+    border-radius: 12px;
     word-wrap: break-word;
-    max-width: 100%;
+    display: inline-block;
 
     .author {
         font-size: 0.75rem;
-        color: $light-dark-blue;
         font-weight: 500;
-        margin-bottom: 0.2rem;
+        margin-bottom: 0.25rem;
         display: block;
     }
 
     .message {
         font-size: 0.95rem;
-        color: $dark-blue;
+    }
+
+    &.own-message {
+        align-self: flex-end;
+        background-color: $bright-blue;
+
+        .author {
+            color: white;
+        }
+
+        .message {
+            color: white;
+        }
+    }
+
+    &.other-message {
+        align-self: flex-start;
+        background-color: $more-bright-blue;
+
+        .author {
+            color: $light-dark-blue;
+        }
+
+        .message {
+            color: $dark-blue;
+        }
     }
 }
 

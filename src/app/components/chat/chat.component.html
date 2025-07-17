@@ -3,7 +3,14 @@
 
   <ng-container *ngIf="!loading">
     <div class="chat-messages">
-      <div *ngFor="let msg of chats" class="chat-message">
+      <div
+        *ngFor="let msg of chats"
+        class="chat-message"
+        [ngClass]="{
+          'own-message': msg.author === currentUser?.email,
+          'other-message': msg.author !== currentUser?.email
+        }"
+      >
         <small class="author">{{ msg.author }}:</small>
         <div class="message">{{ msg.message }}</div>
       </div>

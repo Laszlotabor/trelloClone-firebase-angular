@@ -1,17 +1,9 @@
 <div class="boards-container">
   <div class="boards-header">
-    <h2>Hello, {{ userEmail }}</h2>
-    <p>Here are your boards:</p>
+    <h2>Hello, <span style="color: orange;">{{ userEmail }}</span></h2>
+    <h2>choose one of your existing boards...</h2>
   </div>
-  
-    <!-- Create Board Form -->
-    <form (submit)="createBoard(); $event.preventDefault()" class="board-form">
-      <input type="text" placeholder="Board Title" [(ngModel)]="title" name="title" required />
-      <textarea placeholder="Description (optional)" [(ngModel)]="description" name="description"></textarea>
-      <button type="submit">Create Board</button>
-    </form>
-  
-   <!-- List Boards -->
+     <!-- List Boards -->
 <div class="board-list" *ngIf="boards.length > 0; else noBoards">
   <div
     class="board-card"
@@ -26,6 +18,16 @@
  
   </div>
 </div>
+<h2 class="pt-4"
+>or create a new board!</h2>
+    <!-- Create Board Form -->
+    <form (submit)="createBoard(); $event.preventDefault()" class="board-form">
+      <input type="text" placeholder="Board Title" [(ngModel)]="title" name="title" required />
+      <textarea placeholder="Description (optional)" [(ngModel)]="description" name="description"></textarea>
+      <button type="submit">Create Board</button>
+    </form>
+  
+
 
   
     <ng-template #noBoards>

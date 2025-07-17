@@ -25,16 +25,33 @@ $dark-blue: rgb(2, 15, 26);
 }
 
 .btn-back {
-    background-color: $mid-blue;
+display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background-color: $bright-blue;
     color: white;
     border: none;
-    padding: 0.4rem 0.8rem;
-    border-radius: 4px;
-    font-size: 0.85rem;
+    padding: 0.5rem 1rem;
+    font-size: 0.95rem;
+    font-weight: 500;
+    border-radius: 999px;
     cursor: pointer;
+    transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s;
 
     &:hover {
-        background-color: $light-dark-blue; }
+        background-color: $mid-blue;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        transform: translateX(-2px);
+
+        .arrow {
+            transform: translateX(-3px);
+        }
+    }
+
+    .arrow {
+        display: inline-block;
+        transition: transform 0.2s ease;
+    }
     }
 .board-header {
     flex: 1;

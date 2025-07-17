@@ -75,7 +75,7 @@ export class ChatComponent implements OnInit, OnChanges {
     };
 
     await this.chatService.addChat(this.cardId, newChat);
-    this.chats.push(newChat);
     this.messageText = '';
+    await this.loadChats(); 
   }
 }

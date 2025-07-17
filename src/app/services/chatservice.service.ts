@@ -35,8 +35,11 @@ export class ChatService {
   async addChat(cardId: string, message: Chat): Promise<void> {
     const chatsRef = ref(this.db, 'chats');
     const newChatRef = push(chatsRef);
+    const firebaseId = newChatRef.key;
+
     await set(newChatRef, {
       ...message,
+      id: firebaseId, // ✅ use Firebase ID, not UUID
       cardId,
     });
   }
