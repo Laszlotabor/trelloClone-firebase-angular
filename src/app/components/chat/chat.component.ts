@@ -5,6 +5,9 @@ import {
   OnChanges,
   SimpleChanges,
   ChangeDetectorRef,
+  ViewChild,
+  ElementRef,
+  AfterViewInit,
 } from '@angular/core';
 import { inject } from '@angular/core';
 import { Auth, User } from '@angular/fire/auth';
@@ -22,8 +25,9 @@ import { v4 as uuidv4 } from 'uuid';
   templateUrl: './chat.component.html',
   styleUrl: './chat.component.scss',
 })
-export class ChatComponent implements OnInit, OnChanges {
+export class ChatComponent implements OnInit, OnChanges, AfterViewInit {
   @Input() cardId!: string;
+  @ViewChild('bottomAnchor') bottomAnchor!: ElementRef;
 
   chats: Chat[] = [];
   messageText: string = '';
@@ -45,6 +49,10 @@ export class ChatComponent implements OnInit, OnChanges {
     }
   }
 
+  ngAfterViewInit(): void {
+    this.scrollToBottom();
+  }
+
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['cardId'] && this.cardId) {
       this.loadChats();
@@ -59,7 +67,8 @@ export class ChatComponent implements OnInit, OnChanges {
       console.error('Error loading chats:', error);
     } finally {
       this.loading = false;
-      this.cdr.detectChanges(); // Ensure view updates
+      this.cdr.detectChanges();
+      this.scrollToBottom();
     }
   }
 
@@ -76,6 +85,14 @@ export class ChatComponent implements OnInit, OnChanges {
 
     await this.chatService.addChat(this.cardId, newChat);
     this.messageText = '';
-    await this.loadChats(); 
+    await this.loadChats();
+  }
+
+  private scrollToBottom(): void {
+    setTimeout(() => {
+      if (this.bottomAnchor) {
+        this.bottomAnchor.nativeElement.scrollIntoView({ behavior: 'smooth' });
+      }
+    }, 100);
   }
 }
