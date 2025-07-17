@@ -5,11 +5,14 @@ import { FormsModule } from '@angular/forms';
 import { Card } from '../../models/card.model';
 import { CardserviceService } from '../../services/cardservice.service';
 import { Storage, ref, uploadBytes, getDownloadURL } from '@angular/fire/storage';
+import { ChatComponent } from '../chat/chat.component';
+import { v4 as uuidv4 } from 'uuid';
+
 
 @Component({
   selector: 'app-card-detail',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, ChatComponent],
   templateUrl: './card-detail.component.html',
   styleUrls: ['./card-detail.component.scss'],
 })

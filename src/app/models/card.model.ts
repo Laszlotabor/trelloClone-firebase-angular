@@ -1,3 +1,5 @@
+import { Chat } from './chat.model';
+
 export interface Card {
   id?: string;
   title: string;
@@ -8,4 +10,5 @@ export interface Card {
   position?: number;
   updatedAt?: number;
   imageUrl?: string;
+  chat?: Chat[];
 }

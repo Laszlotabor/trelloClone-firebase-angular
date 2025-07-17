@@ -1,0 +1,68 @@
+@use '../../../variables' as *;
+
+.chat-box {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 1rem;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.chat-loading {
+    text-align: center;
+    color: $mid-blue;
+    font-size: 1rem;
+    margin-top: 1rem;
+}
+
+.chat-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding-right: 0.5rem;
+    margin-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.chat-message {
+    padding: 0.5rem;
+    background-color: $more-bright-blue;
+    border-radius: 8px;
+    word-wrap: break-word;
+    max-width: 100%;
+
+    .author {
+        font-size: 0.75rem;
+        color: $light-dark-blue;
+        font-weight: 500;
+        margin-bottom: 0.2rem;
+        display: block;
+    }
+
+    .message {
+        font-size: 0.95rem;
+        color: $dark-blue;
+    }
+}
+
+.chat-input {
+    display: flex;
+    gap: 0.5rem;
+    padding-top: 0.5rem;
+    border-top: 1px solid #eee;
+
+    input {
+        flex: 1;
+        border-radius: 6px;
+        padding: 0.5rem;
+        border: 1px solid $bright-blue;
+    }
+
+    button {
+        border-radius: 6px;
+        padding: 0 1rem;
+    }
+}
