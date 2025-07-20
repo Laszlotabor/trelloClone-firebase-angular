@@ -11,4 +11,8 @@ export interface Card {
   updatedAt?: number;
   imageUrl?: string;
   chat?: Chat[];
+
+  
+  lastMessageAt?: number;
+  lastViewedBy?: { [userId: string]: number };
 }

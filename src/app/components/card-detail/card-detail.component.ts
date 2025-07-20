@@ -4,10 +4,16 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Card } from '../../models/card.model';
 import { CardserviceService } from '../../services/cardservice.service';
-import { Storage, ref, uploadBytes, getDownloadURL } from '@angular/fire/storage';
+import {
+  Storage,
+  ref as storageRef,
+  uploadBytes,
+  getDownloadURL,
+} from '@angular/fire/storage';
+import { Database, ref as dbRef, set } from '@angular/fire/database';
+import { Auth } from '@angular/fire/auth';
 import { ChatComponent } from '../chat/chat.component';
 import { v4 as uuidv4 } from 'uuid';
-
 
 @Component({
   selector: 'app-card-detail',
@@ -21,6 +27,8 @@ export class CardDetailComponent {
   private router = inject(Router);
   private cardService = inject(CardserviceService);
   private storage = inject(Storage);
+  private db = inject(Database);
+  private auth = inject(Auth);
 
   cardId!: string;
   card?: Card;
@@ -36,9 +44,21 @@ export class CardDetailComponent {
       if (id) {
         this.cardId = id;
         this.card = await this.cardService.getCardById(id);
+        await this.markCardAsViewed(id); // ✅ Mark as viewed when loaded
         this.loading = false;
       }
     });
+  }
+
+  private async markCardAsViewed(cardId: string): Promise<void> {
+    const user = this.auth.currentUser;
+    if (!user) return;
+
+    const viewedRef = dbRef(
+      this.db,
+      `cards/${cardId}/lastViewedBy/${user.uid}`
+    );
+    await set(viewedRef, Date.now());
   }
 
   goBack(): void {
@@ -89,7 +109,10 @@ export class CardDetailComponent {
     const file = (event.target as HTMLInputElement).files?.[0];
     if (!file || !this.card?.id) return;
 
-    const fileRef = ref(this.storage, `card-images/${this.card.id}/${file.name}`);
+    const fileRef = storageRef(
+      this.storage,
+      `card-images/${this.card.id}/${file.name}`
+    );
 
     try {
       await uploadBytes(fileRef, file);

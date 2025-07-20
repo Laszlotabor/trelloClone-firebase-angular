@@ -37,10 +37,18 @@ export class ChatService {
     const newChatRef = push(chatsRef);
     const firebaseId = newChatRef.key;
 
+    const timestamp = message.createdAt ?? Date.now();
+
+    // 1. Save the message
     await set(newChatRef, {
       ...message,
-      id: firebaseId, // ✅ use Firebase ID, not UUID
+      id: firebaseId,
       cardId,
+      createdAt: timestamp,
     });
+
+    // 2. Update lastMessageAt in the card
+    const cardRef = ref(this.db, `cards/${cardId}/lastMessageAt`);
+    await set(cardRef, timestamp);
   }
 }

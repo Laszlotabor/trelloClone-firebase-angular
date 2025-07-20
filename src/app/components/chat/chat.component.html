@@ -2,7 +2,8 @@
   <div *ngIf="loading" class="chat-loading">Loading chat...</div>
 
   <ng-container *ngIf="!loading">
-    <div class="chat-messages">
+    <div class="chat-messages" #chatMessages>
+      <!-- ✅ natural order -->
       <div
         *ngFor="let msg of chats"
         class="chat-message"
@@ -14,18 +15,18 @@
         <small class="author">{{ msg.author }}:</small>
         <div class="message">{{ msg.message }}</div>
       </div>
-      <!-- ✅ Bottom scroll anchor -->
-      <div #bottomAnchor></div>
     </div>
 
     <div class="chat-input">
-      <input
-        type="text"
-        class="form-control"
-        [(ngModel)]="messageText"
-        placeholder="Write a message..."
-        (keydown.enter)="sendMessage()"
-      />
+     <input
+  #chatInput
+  type="text"
+  class="form-control"
+  [(ngModel)]="messageText"
+  placeholder="Write a message..."
+  (keydown.enter)="sendMessage()"
+/>
+
       <button class="btn btn-primary" (click)="sendMessage()">Send</button>
     </div>
   </ng-container>

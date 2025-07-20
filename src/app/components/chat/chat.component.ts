@@ -7,16 +7,15 @@ import {
   ChangeDetectorRef,
   ViewChild,
   ElementRef,
-  AfterViewInit,
 } from '@angular/core';
 import { inject } from '@angular/core';
 import { Auth, User } from '@angular/fire/auth';
-
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Chat } from '../../models/chat.model';
 import { ChatService } from '../../services/chatservice.service';
 import { v4 as uuidv4 } from 'uuid';
+import { Database, ref, set } from '@angular/fire/database';
 
 @Component({
   selector: 'app-chat',
@@ -25,9 +24,10 @@ import { v4 as uuidv4 } from 'uuid';
   templateUrl: './chat.component.html',
   styleUrl: './chat.component.scss',
 })
-export class ChatComponent implements OnInit, OnChanges, AfterViewInit {
+export class ChatComponent implements OnInit, OnChanges {
   @Input() cardId!: string;
-  @ViewChild('bottomAnchor') bottomAnchor!: ElementRef;
+
+  @ViewChild('chatInput') chatInput!: ElementRef<HTMLInputElement>;
 
   chats: Chat[] = [];
   messageText: string = '';
@@ -35,6 +35,7 @@ export class ChatComponent implements OnInit, OnChanges, AfterViewInit {
   currentUser: User | null = null;
 
   private auth = inject(Auth);
+  private db = inject(Database);
 
   constructor(
     private chatService: ChatService,
@@ -43,14 +44,9 @@ export class ChatComponent implements OnInit, OnChanges, AfterViewInit {
 
   ngOnInit(): void {
     this.currentUser = this.auth.currentUser;
-
     if (this.cardId) {
       this.loadChats();
     }
-  }
-
-  ngAfterViewInit(): void {
-    this.scrollToBottom();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -62,13 +58,13 @@ export class ChatComponent implements OnInit, OnChanges, AfterViewInit {
   private async loadChats(): Promise<void> {
     this.loading = true;
     try {
-      this.chats = await this.chatService.getChatsForCard(this.cardId);
+      const chats = await this.chatService.getChatsForCard(this.cardId);
+      this.chats = chats.reverse();
     } catch (error) {
       console.error('Error loading chats:', error);
     } finally {
       this.loading = false;
       this.cdr.detectChanges();
-      this.scrollToBottom();
     }
   }
 
@@ -83,16 +79,26 @@ export class ChatComponent implements OnInit, OnChanges, AfterViewInit {
       createdAt: Date.now(),
     };
 
-    await this.chatService.addChat(this.cardId, newChat);
-    this.messageText = '';
-    await this.loadChats();
-  }
+    try {
+      await this.chatService.addChat(this.cardId, newChat);
 
-  private scrollToBottom(): void {
-    setTimeout(() => {
-      if (this.bottomAnchor) {
-        this.bottomAnchor.nativeElement.scrollIntoView({ behavior: 'smooth' });
+      this.chats.push(newChat);
+      this.chats = [...this.chats].reverse();
+
+      this.messageText = '';
+      this.chatInput?.nativeElement.focus();
+
+      // ✅ Mark the card as viewed by this user (fix for self-red-dot)
+      const user = this.auth.currentUser;
+      if (user) {
+        const viewedRef = ref(
+          this.db,
+          `cards/${this.cardId}/lastViewedBy/${user.uid}`
+        );
+        await set(viewedRef, Date.now());
       }
-    }, 100);
+    } catch (error) {
+      console.error('Failed to send message:', error);
+    }
   }
 }

@@ -1,7 +1,8 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Card } from '../../models/card.model';
 import { Router } from '@angular/router';
+import { Auth } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-card',
@@ -10,10 +11,23 @@ import { Router } from '@angular/router';
   templateUrl: './card.component.html',
   styleUrls: ['./card.component.scss'],
 })
-export class CardComponent {
+export class CardComponent implements OnInit {
   @Input() card!: Card;
 
-  constructor(private router: Router) {}
+  isUnread = false;
+
+  private router = inject(Router);
+  private auth = inject(Auth);
+
+  async ngOnInit(): Promise<void> {
+    const user = this.auth.currentUser;
+    if (!user || !this.card) return;
+
+    const lastMessageAt = this.card.lastMessageAt ?? 0;
+    const lastViewed = this.card.lastViewedBy?.[user.uid] ?? 0;
+
+    this.isUnread = lastMessageAt > lastViewed;
+  }
 
   onCardClicked(event: MouseEvent): void {
     const target = event.target as HTMLElement;

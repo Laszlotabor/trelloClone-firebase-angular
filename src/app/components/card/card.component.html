@@ -1,4 +1,7 @@
 <div class="card" cdkDrag (click)="onCardClicked($event)">
+  <!-- 🔴 Unread bubble -->
+  <div *ngIf="isUnread" class="unread-indicator"></div>
+
   <div class="card-header">
     <h4 class="card-title">{{ card.title }}</h4>
     <p class="card-description" *ngIf="card.description">{{ card.description }}</p>
