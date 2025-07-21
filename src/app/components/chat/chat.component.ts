@@ -77,6 +77,7 @@ export class ChatComponent implements OnInit, OnChanges {
     const newChat: Chat = {
       id: uuidv4(),
       author: this.auth.currentUser.email ?? 'Unknown',
+
       message: trimmed,
       createdAt: Date.now(),
     };
