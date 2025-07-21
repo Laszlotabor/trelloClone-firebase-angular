@@ -11,7 +11,8 @@
           'own-message': msg.author === currentUser?.email,
           'other-message': msg.author !== currentUser?.email
         }"
-        (dblclick)="onMessageDoubleClick(msg)"
+        (dblclick)="msg.author === currentUser?.email && onMessageDoubleClick(msg)"
+
       >
         <small class="author">{{ msg.author }}:</small>
         <div class="message">{{ msg.message }}</div>
