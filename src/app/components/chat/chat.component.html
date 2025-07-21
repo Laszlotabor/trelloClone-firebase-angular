@@ -11,23 +11,56 @@
           'own-message': msg.author === currentUser?.email,
           'other-message': msg.author !== currentUser?.email
         }"
+        (dblclick)="onMessageDoubleClick(msg)"
       >
         <small class="author">{{ msg.author }}:</small>
         <div class="message">{{ msg.message }}</div>
       </div>
     </div>
 
+    <!-- 💬 Input -->
     <div class="chat-input">
-     <input
-  #chatInput
-  type="text"
-  class="form-control"
-  [(ngModel)]="messageText"
-  placeholder="Write a message..."
-  (keydown.enter)="sendMessage()"
-/>
-
+      <input
+        #chatInput
+        type="text"
+        class="form-control"
+        [(ngModel)]="messageText"
+        placeholder="Write a message..."
+        (keydown.enter)="sendMessage()"
+      />
       <button class="btn btn-primary" (click)="sendMessage()">Send</button>
     </div>
   </ng-container>
+
+  <!-- 💬 Message Detail Modal -->
+  <div class="message-modal-overlay" *ngIf="selectedMessage">
+    <div class="message-modal">
+      <div class="modal-header">
+        <h4>Message from {{ selectedMessage.author }}</h4>
+        <button class="close-btn" (click)="cancelEdit()">✖</button>
+      </div>
+
+      <div *ngIf="isEditing; else viewOnlyModal">
+        <textarea
+          [(ngModel)]="selectedMessage!.message"
+          rows="5"
+          class="form-control"
+        ></textarea>
+
+        <div class="modal-actions">
+          <button class="btn btn-success" (click)="saveEditedMessage()">💾 Save</button>
+          <button class="btn btn-danger" (click)="deleteMessage()">🗑️ Delete</button>
+          <button class="btn btn-secondary" (click)="cancelEdit()">Cancel</button>
+          <button class="btn btn-outline-primary" (click)="onAddImage()">🖼️ Add Image</button>
+        </div>
+      </div>
+
+      <ng-template #viewOnlyModal>
+        <p class="view-message">{{ selectedMessage.message }}</p>
+        <div class="modal-actions">
+          <button class="btn btn-outline-secondary" (click)="cancelEdit()">Close</button>
+        </div>
+      </ng-template>
+    </div>
+  </div>
 </div>

@@ -33,6 +33,8 @@ export class ChatComponent implements OnInit, OnChanges {
   messageText: string = '';
   loading = true;
   currentUser: User | null = null;
+  selectedMessage?: Chat;
+  isEditing = false;
 
   private auth = inject(Auth);
   private db = inject(Database);
@@ -100,5 +102,45 @@ export class ChatComponent implements OnInit, OnChanges {
     } catch (error) {
       console.error('Failed to send message:', error);
     }
+  }
+
+  onMessageDoubleClick(message: Chat): void {
+    this.selectedMessage = message;
+    this.isEditing = this.isOwnMessage(message); // allow edit if it's user's own
+  }
+  isOwnMessage(msg: Chat): boolean {
+    return msg.author === this.currentUser?.email;
+  }
+
+  async saveEditedMessage(): Promise<void> {
+    if (!this.selectedMessage || !this.cardId) return;
+    try {
+      await this.chatService.updateChat(this.cardId, this.selectedMessage);
+      this.selectedMessage = undefined;
+    } catch (error) {
+      console.error('Failed to update message:', error);
+    }
+  }
+
+  async deleteMessage(): Promise<void> {
+    if (!this.selectedMessage || !this.cardId) return;
+    const confirmed = confirm('Delete this message?');
+    if (!confirmed) return;
+
+    try {
+      await this.chatService.deleteChat(this.cardId, this.selectedMessage.id!);
+      this.chats = this.chats.filter((c) => c.id !== this.selectedMessage?.id);
+      this.selectedMessage = undefined;
+    } catch (error) {
+      console.error('Failed to delete message:', error);
+    }
+  }
+
+  cancelEdit(): void {
+    this.selectedMessage = undefined;
+  }
+
+  onAddImage(): void {
+    alert('Image upload coming soon!');
   }
 }

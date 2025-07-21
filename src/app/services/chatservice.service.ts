@@ -51,4 +51,13 @@ export class ChatService {
     const cardRef = ref(this.db, `cards/${cardId}/lastMessageAt`);
     await set(cardRef, timestamp);
   }
+  async updateChat(cardId: string, chat: Chat): Promise<void> {
+    const chatRef = ref(this.db, `chats/${chat.id}`);
+    await set(chatRef, { ...chat, cardId }); // overwrite the chat
+  }
+
+  async deleteChat(cardId: string, chatId: string): Promise<void> {
+    const chatRef = ref(this.db, `chats/${chatId}`);
+    await set(chatRef, null); // delete
+  }
 }
