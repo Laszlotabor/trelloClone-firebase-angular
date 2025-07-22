@@ -9,10 +9,10 @@ export interface Card {
   createdAt: number;
   position?: number;
   updatedAt?: number;
-  imageUrl?: string;
+  imageUrls?: string[];
+
   chat?: Chat[];
 
-  
   lastMessageAt?: number;
   lastViewedBy?: { [userId: string]: number };
 }

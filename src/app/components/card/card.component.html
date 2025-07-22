@@ -7,11 +7,14 @@
     <p class="card-description" *ngIf="card.description">{{ card.description }}</p>
   </div>
 
-  <div class="image-wrapper" *ngIf="card.imageUrl" (click)="$event.stopPropagation()">
-    <img
-      [src]="card.imageUrl"
-      class="card-image-preview"
-      alt="Card Image"
-    />
-  </div>
+  <div class="image-wrapper" *ngIf="card.imageUrls?.length" (click)="$event.stopPropagation()">
+  <img
+    [src]="lastImageUrl"
+
+
+    class="card-image-preview"
+    alt="Card Image"
+  />
+</div>
+
 </div>

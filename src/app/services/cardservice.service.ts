@@ -22,6 +22,7 @@ export class CardserviceService {
     const cardData: Card = {
       ...card,
       id: newCardRef.key!,
+      imageUrls: card.imageUrls ?? [], // ✅ default to empty array if undefined
     };
     await set(newCardRef, cardData);
   }
@@ -51,7 +52,7 @@ export class CardserviceService {
       description: card.description,
       position: card.position ?? Date.now(),
       updatedAt: Date.now(),
-      imageUrl: card.imageUrl ?? null,
+      imageUrls: card.imageUrls ?? [],
     });
   }
 

@@ -37,4 +37,9 @@ export class CardComponent implements OnInit {
       this.router.navigate(['/card', this.card.id]);
     }
   }
+  get lastImageUrl(): string | null {
+    return this.card.imageUrls?.length
+      ? this.card.imageUrls[this.card.imageUrls.length - 1]
+      : null;
+  }
 }

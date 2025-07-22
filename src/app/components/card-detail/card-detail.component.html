@@ -8,10 +8,51 @@
 
     <!-- Content -->
     <div class="card-content-wrapper">
-      <!-- Image -->
-      <div class="card-image-wrapper" *ngIf="card.imageUrl">
-        <img [src]="card.imageUrl" alt="Card Image" />
+
+      <!-- carousel -->
+      <div class="card-image-wrapper" *ngIf="card.imageUrls?.length">
+  <div id="cardImageCarousel" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
+      <div
+        class="carousel-item"
+        *ngFor="let imgUrl of card.imageUrls; let i = index"
+        [class.active]="i === 0"
+      >
+        <div class="position-relative">
+  <img [src]="imgUrl" class="d-block w-100" alt="Card Image" />
+  <button
+    type="button"
+    class="btn btn-sm  position-absolute top-0 end-0 m-2"
+    (click)="deleteImage(imgUrl)"
+    title="Delete image"
+  >
+    X
+  </button>
+</div>
+
       </div>
+    </div>
+    <button
+      class="carousel-control-prev"
+      type="button"
+      data-bs-target="#cardImageCarousel"
+      data-bs-slide="prev"
+    >
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button
+      class="carousel-control-next"
+      type="button"
+      data-bs-target="#cardImageCarousel"
+      data-bs-slide="next"
+    >
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+</div>
+
 
       <!-- Text + Actions -->
       <div class="card-text-wrapper">
