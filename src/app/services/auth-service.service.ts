@@ -17,7 +17,7 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class AuthServiceService {
   private auth: Auth = inject(Auth);
-  private db: Database = inject(Database); // 💡 Inject Firebase DB
+  private db: Database = inject(Database);
 
   private userSubject = new BehaviorSubject<User | null>(null);
   user$ = this.userSubject.asObservable();
@@ -28,16 +28,40 @@ export class AuthServiceService {
     });
   }
 
+  // ✅ Helper to safely write user to /users/{uid}
+  private async saveUserProfile(user: User): Promise<void> {
+    if (!user.uid || !user.email) {
+      console.error('❌ Cannot write user — missing UID or email');
+      return;
+    }
+
+    // ✅ Wait until Firebase recognizes the session
+    await new Promise<void>((resolve) => {
+      const unsubscribe = onAuthStateChanged(this.auth, (authedUser) => {
+        if (authedUser?.uid === user.uid) {
+          unsubscribe(); // stop listening
+          resolve();
+        }
+      });
+    });
+
+    try {
+      console.log('✅ Writing user to /users/' + user.uid);
+      await set(ref(this.db, 'users/' + user.uid), {
+        email: user.email,
+      });
+    } catch (err) {
+      console.error('❌ Failed to write user to DB:', err);
+    }
+  }
+
   // ✅ Google Sign-In
   async signInWithGoogle() {
     const provider = new GoogleAuthProvider();
     const result = await signInWithPopup(this.auth, provider);
     const user = result.user;
 
-    // Save user to DB
-    await set(ref(this.db, 'users/' + user.uid), {
-      email: user.email,
-    });
+    await this.saveUserProfile(user);
 
     return result;
   }
@@ -51,9 +75,7 @@ export class AuthServiceService {
     );
     const user = credential.user;
 
-    await set(ref(this.db, 'users/' + user.uid), {
-      email: user.email,
-    });
+    await this.saveUserProfile(user);
 
     return credential;
   }
@@ -78,7 +100,7 @@ export class AuthServiceService {
     return this.auth.currentUser;
   }
 
-  // ✅ Check if a user is registered based on DB (NOT just Firebase Auth)
+  // ✅ Check if a user is registered based on DB
   async isRegisteredUser(email: string): Promise<boolean> {
     const snapshot = await get(ref(this.db, 'users'));
     if (!snapshot.exists()) return false;

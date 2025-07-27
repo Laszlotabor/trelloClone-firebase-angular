@@ -11,7 +11,8 @@
     'own-message': msg.author === currentUser?.email,
     'other-message': msg.author !== currentUser?.email
   }"
-  [style.backgroundColor]="msg.author !== currentUser?.email ? getUserColor(msg.author) : null"
+ [style.backgroundColor]="msg.author && msg.author !== currentUser?.email ? getUserColor(msg.author) : null"
+
   (dblclick)="msg.author === currentUser?.email && onMessageDoubleClick(msg)"
 >
   <small class="author">{{ msg.author }}:</small>

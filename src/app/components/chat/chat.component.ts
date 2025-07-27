@@ -147,14 +147,16 @@ export class ChatComponent implements OnInit, OnChanges {
   }
 
   // Generates or gets a consistent color for a user
-  getUserColor(email: string): string {
+  getUserColor(email: string | undefined | null): string {
+    if (!email) return '#eee'; // default color for unknown users
+
     if (!this.userColorMap.has(email)) {
       const hash = [...email].reduce(
         (acc, char) => acc + char.charCodeAt(0),
         0
       );
-      const hue = hash % 360; // get hue between 0–359
-      const color = `hsl(${hue}, 70%, 85%)`; // pastel color
+      const hue = hash % 360;
+      const color = `hsl(${hue}, 70%, 85%)`;
       this.userColorMap.set(email, color);
     }
     return this.userColorMap.get(email)!;
