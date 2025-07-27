@@ -8,51 +8,38 @@
 
     <!-- Content -->
     <div class="card-content-wrapper">
-
       <!-- carousel -->
       <div class="card-image-wrapper" *ngIf="card.imageUrls?.length">
-  <div id="cardImageCarousel" class="carousel slide" data-bs-ride="carousel">
-    <div class="carousel-inner">
-      <div
-        class="carousel-item"
-        *ngFor="let imgUrl of card.imageUrls; let i = index"
-        [class.active]="i === 0"
-      >
-        <div class="position-relative">
-  <img [src]="imgUrl" class="d-block w-100" alt="Card Image" />
-  <button
-    type="button"
-    class="btn btn-sm  position-absolute top-0 end-0 m-2"
-    (click)="deleteImage(imgUrl)"
-    title="Delete image"
-  >
-    X
-  </button>
-</div>
-
+        <div id="cardImageCarousel" class="carousel slide" data-bs-ride="carousel">
+          <div class="carousel-inner">
+            <div
+              class="carousel-item"
+              *ngFor="let imgUrl of card.imageUrls; let i = index"
+              [class.active]="i === 0"
+            >
+              <div class="position-relative">
+                <img [src]="imgUrl" class="d-block w-100" alt="Card Image" />
+                <button
+                  type="button"
+                  class="btn btn-sm position-absolute top-0 end-0 m-2"
+                  (click)="deleteImage(imgUrl)"
+                  title="Delete image"
+                >
+                  X
+                </button>
+              </div>
+            </div>
+          </div>
+          <button class="carousel-control-prev" type="button" data-bs-target="#cardImageCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#cardImageCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
+        </div>
       </div>
-    </div>
-    <button
-      class="carousel-control-prev"
-      type="button"
-      data-bs-target="#cardImageCarousel"
-      data-bs-slide="prev"
-    >
-      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Previous</span>
-    </button>
-    <button
-      class="carousel-control-next"
-      type="button"
-      data-bs-target="#cardImageCarousel"
-      data-bs-slide="next"
-    >
-      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Next</span>
-    </button>
-  </div>
-</div>
-
 
       <!-- Text + Actions -->
       <div class="card-text-wrapper">
@@ -65,24 +52,6 @@
           <button class="btn btn-outline-secondary" (click)="fileInput.click()">🖼️ Add Image</button>
           <input type="file" #fileInput (change)="onImageSelected($event)" hidden />
         </div>
-
-        <!-- Edit Form -->
-        <div *ngIf="isEditing" class="edit-form">
-          <div class="form-group">
-            <label>Title</label>
-            <input [(ngModel)]="editableTitle" type="text" class="form-control" />
-          </div>
-
-          <div class="form-group">
-            <label>Description</label>
-            <textarea [(ngModel)]="editableDescription" class="form-control" rows="3"></textarea>
-          </div>
-
-          <div class="edit-buttons">
-            <button class="btn btn-success" (click)="saveEdit()">💾 Save</button>
-            <button class="btn btn-secondary" (click)="cancelEdit()">Cancel</button>
-          </div>
-        </div>
       </div>
     </div>
   </div>
@@ -92,5 +61,27 @@
     <ng-container *ngIf="card.id">
       <app-chat [cardId]="card.id"></app-chat>
     </ng-container>
+  </div>
+
+  <!-- Edit Modal -->
+  <div class="edit-modal-overlay" *ngIf="isEditing">
+    <div class="edit-modal">
+      <h3>Edit Card</h3>
+
+      <div class="form-group">
+        <label>Title</label>
+        <input [(ngModel)]="editableTitle" type="text" class="form-control" />
+      </div>
+
+      <div class="form-group">
+        <label>Description</label>
+        <textarea [(ngModel)]="editableDescription" class="form-control" rows="3"></textarea>
+      </div>
+
+      <div class="edit-buttons">
+        <button class="btn btn-success" (click)="saveEdit()">💾 Save</button>
+        <button class="btn btn-secondary" (click)="cancelEdit()">Cancel</button>
+      </div>
+    </div>
   </div>
 </div>

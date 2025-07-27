@@ -4,19 +4,20 @@
   <ng-container *ngIf="!loading">
     <div class="chat-messages" #chatMessages>
       <!-- ✅ natural order -->
-      <div
-        *ngFor="let msg of chats"
-        class="chat-message"
-        [ngClass]="{
-          'own-message': msg.author === currentUser?.email,
-          'other-message': msg.author !== currentUser?.email
-        }"
-        (dblclick)="msg.author === currentUser?.email && onMessageDoubleClick(msg)"
+<div
+  *ngFor="let msg of chats"
+  class="chat-message"
+  [ngClass]="{
+    'own-message': msg.author === currentUser?.email,
+    'other-message': msg.author !== currentUser?.email
+  }"
+  [style.backgroundColor]="msg.author !== currentUser?.email ? getUserColor(msg.author) : null"
+  (dblclick)="msg.author === currentUser?.email && onMessageDoubleClick(msg)"
+>
+  <small class="author">{{ msg.author }}:</small>
+  <div class="message">{{ msg.message }}</div>
+</div>
 
-      >
-        <small class="author">{{ msg.author }}:</small>
-        <div class="message">{{ msg.message }}</div>
-      </div>
     </div>
 
     <!-- 💬 Input -->

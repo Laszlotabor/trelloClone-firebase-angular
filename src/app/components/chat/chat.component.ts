@@ -38,6 +38,7 @@ export class ChatComponent implements OnInit, OnChanges {
 
   private auth = inject(Auth);
   private db = inject(Database);
+  private userColorMap = new Map<string, string>();
 
   constructor(
     private chatService: ChatService,
@@ -143,5 +144,19 @@ export class ChatComponent implements OnInit, OnChanges {
 
   onAddImage(): void {
     alert('Image upload coming soon!');
+  }
+
+  // Generates or gets a consistent color for a user
+  getUserColor(email: string): string {
+    if (!this.userColorMap.has(email)) {
+      const hash = [...email].reduce(
+        (acc, char) => acc + char.charCodeAt(0),
+        0
+      );
+      const hue = hash % 360; // get hue between 0–359
+      const color = `hsl(${hue}, 70%, 85%)`; // pastel color
+      this.userColorMap.set(email, color);
+    }
+    return this.userColorMap.get(email)!;
   }
 }
