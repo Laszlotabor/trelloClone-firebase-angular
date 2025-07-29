@@ -53,6 +53,7 @@ export class CardserviceService {
       position: card.position ?? Date.now(),
       updatedAt: Date.now(),
       imageUrls: card.imageUrls ?? [],
+      done: card.done ?? false, // ✅ add this line
     });
   }
 
