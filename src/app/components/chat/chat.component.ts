@@ -16,6 +16,7 @@ import { Chat } from '../../models/chat.model';
 import { ChatService } from '../../services/chatservice.service';
 import { v4 as uuidv4 } from 'uuid';
 import { Database, ref, set } from '@angular/fire/database';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-chat',
@@ -26,11 +27,10 @@ import { Database, ref, set } from '@angular/fire/database';
 })
 export class ChatComponent implements OnInit, OnChanges {
   @Input() cardId!: string;
-
   @ViewChild('chatInput') chatInput!: ElementRef<HTMLInputElement>;
 
   chats: Chat[] = [];
-  messageText: string = '';
+  messageText = '';
   loading = true;
   currentUser: User | null = null;
   selectedMessage?: Chat;
@@ -38,6 +38,7 @@ export class ChatComponent implements OnInit, OnChanges {
 
   private auth = inject(Auth);
   private db = inject(Database);
+  private sanitizer = inject(DomSanitizer);
   private userColorMap = new Map<string, string>();
 
   constructor(
@@ -78,21 +79,18 @@ export class ChatComponent implements OnInit, OnChanges {
     const newChat: Chat = {
       id: uuidv4(),
       author: this.auth.currentUser.email ?? 'Unknown',
-
       message: trimmed,
       createdAt: Date.now(),
     };
 
     try {
       await this.chatService.addChat(this.cardId, newChat);
-
       this.chats.push(newChat);
       this.chats = [...this.chats].reverse();
-
       this.messageText = '';
       this.chatInput?.nativeElement.focus();
 
-      // ✅ Mark the card as viewed by this user (fix for self-red-dot)
+      // Mark card as viewed
       const user = this.auth.currentUser;
       if (user) {
         const viewedRef = ref(
@@ -108,8 +106,9 @@ export class ChatComponent implements OnInit, OnChanges {
 
   onMessageDoubleClick(message: Chat): void {
     this.selectedMessage = message;
-    this.isEditing = this.isOwnMessage(message); // allow edit if it's user's own
+    this.isEditing = this.isOwnMessage(message);
   }
+
   isOwnMessage(msg: Chat): boolean {
     return msg.author === this.currentUser?.email;
   }
@@ -146,10 +145,8 @@ export class ChatComponent implements OnInit, OnChanges {
     alert('Image upload coming soon!');
   }
 
-  // Generates or gets a consistent color for a user
   getUserColor(email: string | undefined | null): string {
-    if (!email) return '#eee'; // default color for unknown users
-
+    if (!email) return '#eee';
     if (!this.userColorMap.has(email)) {
       const hash = [...email].reduce(
         (acc, char) => acc + char.charCodeAt(0),
@@ -160,5 +157,13 @@ export class ChatComponent implements OnInit, OnChanges {
       this.userColorMap.set(email, color);
     }
     return this.userColorMap.get(email)!;
+  }
+
+  convertLinks(text: string): SafeHtml {
+    const urlRegex = /(https?:\/\/[^\s]+)/g;
+    const linked = text.replace(urlRegex, (url) => {
+      return `<a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>`;
+    });
+    return this.sanitizer.bypassSecurityTrustHtml(linked);
   }
 }

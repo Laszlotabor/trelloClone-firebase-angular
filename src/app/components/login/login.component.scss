@@ -62,14 +62,27 @@
                 background-color: $light-dark-blue;
             }
 
-            &.google-btn {
-                background-color: $bright-blue;
-                margin-top: -0.5rem;
-
-                &:hover {
-                    background-color: $mid-blue;
-                }
-            }
+                   &.google-btn {
+                       display: flex;
+                       align-items: center;
+                       justify-content: center;
+                       gap: 0.5rem;
+                       background-color: white;
+                       color: $dark-blue;
+                       border: 1px solid $mid-blue;
+                       margin-top: -0.5rem;
+        
+                       img.google-logo {
+                           width: 20px;
+                           height: 20px;
+                       }
+        
+                       &:hover {
+                           background-color: $more-bright-blue;
+                           border-color: $bright-blue;
+                           color: $bright-blue;
+                       }
+                   }
         }
 
         .register-link {
