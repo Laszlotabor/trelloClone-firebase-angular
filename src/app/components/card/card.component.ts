@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Card } from '../../models/card.model';
 import { Router } from '@angular/router';
 import { Auth } from '@angular/fire/auth';
+import { CardserviceService } from '../../services/cardservice.service'; // ← Add this if you want to persist "done" state
 
 @Component({
   selector: 'app-card',
@@ -18,6 +19,7 @@ export class CardComponent implements OnInit {
 
   private router = inject(Router);
   private auth = inject(Auth);
+  private cardService = inject(CardserviceService); // For saving state
 
   async ngOnInit(): Promise<void> {
     const user = this.auth.currentUser;
@@ -37,9 +39,16 @@ export class CardComponent implements OnInit {
       this.router.navigate(['/card', this.card.id]);
     }
   }
+
   get lastImageUrl(): string | null {
     return this.card.imageUrls?.length
       ? this.card.imageUrls[this.card.imageUrls.length - 1]
       : null;
+  }
+
+  toggleDone(event: MouseEvent): void {
+    event.stopPropagation();
+    this.card.done = !this.card.done;
+    this.cardService.updateCard(this.card); // persist change
   }
 }

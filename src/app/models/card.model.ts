@@ -10,6 +10,7 @@ export interface Card {
   position?: number;
   updatedAt?: number;
   imageUrls?: string[];
+  done?: boolean;
 
   chat?: Chat[];
 

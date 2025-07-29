@@ -1,6 +1,16 @@
 <div class="card" cdkDrag (click)="onCardClicked($event)">
   <!-- 🔴 Unread bubble -->
   <div *ngIf="isUnread" class="unread-indicator"></div>
+  <!-- ✅ Done toggle icon -->
+<div
+  class="done-toggle"
+  (click)="toggleDone($event)"
+  [class.done]="card.done"
+  title="Mark as done"
+>
+  ✔
+</div>
+
 
   <div class="card-header">
     <h4 class="card-title">{{ card.title }}</h4>
