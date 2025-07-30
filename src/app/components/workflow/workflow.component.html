@@ -1,102 +1,119 @@
-<div class="workflow-container">
-  <h2 class="workflow-title">🚧 Project Workflow & Diary</h2>
-  <p class="workflow-intro">
-    This section documents what I’m working on, what I’ve learned, and how the project is evolving.
+<div class="workflow">
+  <h2 class="workflow__title">📘 Project Workflow & Development Diary</h2>
+  <p class="workflow__intro">
+    Track the evolution of this Trello clone — feature launches, UI updates, bug fixes, and lessons learned.
   </p>
-
-  <div class="workflow-entry">
-    <div class="entry-header">
-      <span class="entry-date">📅 July 17, 2025</span>
-      <span class="entry-tag">🔥 Feature</span>
+<!-- --------------------------------------------------- -->
+<div class="workflow__entries">
+    <div class="workflow__entry">
+      <div class="workflow__meta">
+        <span class="workflow__date">📅 July 30, 2025</span>
+      </div>
+      <h3 class="workflow__headline">bit of UX</h3>
+      <p class="workflow__content">
+        New look for the page boards with a pop-up modal board creator!  🔧🔧🔧🔧
+      </p>
+      
     </div>
-    <h3 class="entry-title">Chat Component Redesigned</h3>
-    <p class="entry-body">
-      Today I finalized the chat layout: scrollable messages, pinned input, and author emails. I also fixed Firebase rules so everything loads safely. Feels solid now!
-    </p>
-  </div>
-
-  <div class="workflow-entry">
-    <div class="entry-header">
-      <span class="entry-date">📅 July 16, 2025</span>
-      <span class="entry-tag">🎨 UI Polish</span>
+<!-- -------------------------------------------------------------- nexxxxt                                            -->
+  <div class="workflow__entries">
+    <div class="workflow__entry">
+      <div class="workflow__meta">
+        <span class="workflow__date">📅 July 30, 2025</span>
+      </div>
+      <h3 class="workflow__headline">Major Fixes After Breakdown</h3>
+      <p class="workflow__content">
+        Spent 14hrs fixing Firebase rules and restoring completely broken code. Almost restarted the project — but now it's stable again. 🔧
+      </p>
+      <p class="workflow__status">✅ Now working properly</p>
     </div>
-    <h3 class="entry-title">Back Button Upgrade</h3>
-    <p class="entry-body">
-      Upgraded the “Back to Board” button with animation, hover glow, and cleaner styling. Small touch, big feel.
-    </p>
+<!-- ------------------------------------------------------------------------------------ -->
+    <div class="workflow__entry">
+      <div class="workflow__meta">
+        <span class="workflow__date">📅 July 29, 2025</span>
+        <span class="workflow__tag">🔗 Links & Auth UI</span>
+      </div>
+      <h3 class="workflow__headline">Safe Chat Links & Google Button</h3>
+      <p class="workflow__content">
+        Used <code>DomSanitizer</code> and <code>SafeHtml</code> to clean links in chat. Login now features a redesigned Google sign-in button.
+      </p>
+    </div>
+
+    <div class="workflow__entry">
+      <div class="workflow__meta">
+        <span class="workflow__date">📅 July 27, 2025</span>
+        <span class="workflow__tag">🛠️ UX Fix</span>
+      </div>
+      <h3 class="workflow__headline">Improved Card Edit Popup</h3>
+      <p class="workflow__content">
+        Fixed the card editing modal for better UX and positioning.
+      </p>
+    </div>
+
+    <div class="workflow__entry">
+      <div class="workflow__meta">
+        <span class="workflow__date">📅 July 27, 2025</span>
+        <span class="workflow__tag">🔐 Auth & 🎨 Chat UX</span>
+      </div>
+      <h3 class="workflow__headline">Auth Bug Fix & Pastel Chat Bubbles</h3>
+      <p class="workflow__content">
+        Fixed Firebase <code>PERMISSION_DENIED</code> error on profile creation using UID-based security rules. Added user-specific HSL chat bubble colors via email hashing.
+      </p>
+    </div>
+
+    <div class="workflow__entry">
+      <div class="workflow__meta">
+        <span class="workflow__date">📅 July 22, 2025</span>
+        <span class="workflow__tag">🖼️ Images</span>
+      </div>
+      <h3 class="workflow__headline">Multiple Image Upload</h3>
+      <p class="workflow__content">
+        Refactored the upload logic to support multiple images using a Bootstrap carousel. Added fallback for legacy single-image cards.
+      </p>
+    </div>
+
+    <div class="workflow__entry">
+      <div class="workflow__meta">
+        <span class="workflow__date">📅 July 20, 2025</span>
+        <span class="workflow__tag">💬 Message Modal</span>
+      </div>
+      <h3 class="workflow__headline">Chat Message Detail View</h3>
+      <p class="workflow__content">
+        Added modal for viewing/editing/deleting chat messages. Early hook for image attachment also added.
+      </p>
+    </div>
+
+    <div class="workflow__entry">
+      <div class="workflow__meta">
+        <span class="workflow__date">📅 July 20, 2025</span>
+        <span class="workflow__tag">🔔 Chat UX</span>
+      </div>
+      <h3 class="workflow__headline">Unread Message Indicator</h3>
+      <p class="workflow__content">
+        Cards now show a red dot when unread messages exist, based on user view timestamps. Messages mark as read on send.
+      </p>
+    </div>
+
+    <div class="workflow__entry">
+      <div class="workflow__meta">
+        <span class="workflow__date">📅 July 16, 2025</span>
+        <span class="workflow__tag">🎨 UI Polish</span>
+      </div>
+      <h3 class="workflow__headline">Back Button Upgrade</h3>
+      <p class="workflow__content">
+        Added hover animation and glow to the “Back to Board” button. Small upgrade, big difference.
+      </p>
+    </div>
+
+    <div class="workflow__entry">
+      <div class="workflow__meta">
+        <span class="workflow__date">📅 July 17, 2025</span>
+        <span class="workflow__tag">💡 Feature</span>
+      </div>
+      <h3 class="workflow__headline">Chat Layout Redesign</h3>
+      <p class="workflow__content">
+        Finalized chat UI with scrollable messages, pinned input, and author info. Firebase rules updated for secure loading.
+      </p>
+    </div>
   </div>
-
-  <div class="workflow-entry">
-  <div class="entry-header">
-    <span class="entry-date">📅 July 20, 2025</span>
-    <span class="entry-tag">💬 Chat UX</span>
-  </div>
-  <h3 class="entry-title">Unread Message Indicator</h3>
-  <p class="entry-body">
-    Added a red dot to cards with unread messages by comparing message and view timestamps per user. Automatically marks chats as read after sending to avoid false alerts — a subtle but powerful boost to collaboration clarity.
-  </p>
-</div>
-
-<div class="workflow-entry">
-  <div class="entry-header">
-    <span class="entry-date">📅 July 20, 2025</span>
-    <span class="entry-tag">🧑‍💻 Message Management</span>
-  </div>
-  <h3 class="entry-title">Message Detail Modal</h3>
-  <p class="entry-body">
-    Implemented a centered, modal-style detail view for chat messages with support for editing and deleting own messages. Also added an "Add Image" button as a future enhancement hook — laying the groundwork for rich message content.
-  </p>
-</div>
-
-
-
-<div class="workflow-entry">
-  <div class="entry-header">
-    <span class="entry-date">📅 July 22, 2025</span>
-    <span class="entry-tag">🧩 Image Upload</span>
-  </div>
-  <h3 class="entry-title">Multiple Image Upload Support</h3>
-  <p class="entry-body">
-    Refactored the card model and upload logic to support multiple images. Integrated a Bootstrap carousel in the detail view and ensured old single-image entries still display correctly via a fallback.
-  </p>
-</div>
-
-<div class="workflow-entry">
-  <div class="entry-header">
-    <span class="entry-date">📅 July 27, 2025</span>
-    <span class="entry-tag">🔐 Firebase Auth & 🎨 UI</span>
-  </div>
-  <h3 class="entry-title">Fixed DB Permission Error & Added User-Specific Chat Colors</h3>
-  <p class="entry-body">
-    Resolved a <code>PERMISSION_DENIED</code> error during user profile creation in Firebase Realtime Database by updating security rules to scope read/write access by authenticated UID. Refactored the auth service to include a <code>saveUserProfile()</code> helper that waits for Firebase to confirm session authentication before writing. Additionally, implemented dynamic chat bubble coloring by hashing user emails into unique HSL values, allowing each user's messages to appear in consistent pastel tones for clearer conversation context.
-  </p>
-</div>
-
-<div class="workflow-entry">
-  <div class="entry-header">
-    <span class="entry-date">📅 July 27, 2025</span>
-    <span class="entry-tag">🔐 Fixed pop-up editing on card</span>
-  </div>
-  <h3 class="entry-title">Pop-up window fixed for editing</h3>
-  <p class="entry-body">
-    Fixed a nice pop-up window to edit the cards for better user experience 
-  </p>
-</div>
-
-<div class="workflow-entry">
-  <div class="entry-header">
-    <span class="entry-date">📅 July 29, 2025</span>
-    
-  </div>
-  <h3 class="entry-title">links, googlebutton</h3>
-  <p class="entry-body">links fixed for chats with DomSanitizer, SafeHtml, also login has a  better looking google button</p>
-
-</div>
-
-
-
-
-
-
-  <!-- Add more entries below as needed -->
 </div>

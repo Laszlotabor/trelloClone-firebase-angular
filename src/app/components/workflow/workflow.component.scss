@@ -1,69 +1,90 @@
 @use '../../../variables' as *;
 
-.workflow-container {
-    background-color: white;
-    border-radius: 12px;
-    padding: 2rem;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+.workflow {
+    background: white;
+    border-radius: 1rem;
+    padding: 2.5rem;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
     display: flex;
     flex-direction: column;
     gap: 2rem;
-}
 
-.workflow-title {
-    font-size: 1.75rem;
-    color: $dark-blue;
-    margin-bottom: 0.25rem;
-}
-
-.workflow-intro {
-    font-size: 1rem;
-    color: $light-dark-blue;
-    margin-bottom: 1rem;
-    line-height: 1.5;
-}
-
-.workflow-entry {
-    padding: 1.5rem;
-    border-left: 4px solid $bright-blue;
-    background-color: $more-bright-blue;
-    border-radius: 8px;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    transition: background-color 0.2s;
-
-    &:hover {
-        background-color: lighten($more-bright-blue, 4%);
+    &__title {
+        font-size: 2rem;
+        font-weight: 700;
+        color: $dark-blue;
     }
 
-    .entry-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        font-size: 0.85rem;
+    &__intro {
+        font-size: 1.05rem;
         color: $light-dark-blue;
+        line-height: 1.6;
+    }
 
-        .entry-tag {
-            background-color: $bright-blue;
-            color: white;
-            padding: 0.2rem 0.6rem;
-            border-radius: 999px;
-            font-size: 0.75rem;
-            font-weight: 500;
+    &__entries {
+        display: flex;
+        flex-direction: column;
+        gap: 1.75rem;
+    }
+
+    &__entry {
+        background-color: $more-bright-blue;
+        border-left: 5px solid $bright-blue;
+        padding: 1.5rem 1.5rem 1.25rem 1.25rem;
+        border-radius: 0.75rem;
+        transition: background-color 0.25s ease;
+
+        &:hover {
+            background-color: lighten($more-bright-blue, 6%);
         }
     }
 
-    .entry-title {
-        font-size: 1.2rem;
-        font-weight: 600;
-        color: $dark-blue;
-        margin: 0.3rem 0;
+    &__meta {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 0.9rem;
+        color: $light-dark-blue;
+        margin-bottom: 0.5rem;
     }
 
-    .entry-body {
+    &__date {
+        font-weight: 500;
+    }
+
+    &__tag {
+        background: $bright-blue;
+        color: white;
+        font-size: 0.75rem;
+        padding: 0.2rem 0.65rem;
+        border-radius: 999px;
+        font-weight: 600;
+    }
+
+    &__headline {
+        font-size: 1.25rem;
+        color: $dark-blue;
+        font-weight: 600;
+        margin-bottom: 0.3rem;
+    }
+
+    &__content {
         font-size: 0.95rem;
         color: $light-dark-blue;
         line-height: 1.5;
+
+        code {
+            background: rgba(0, 0, 0, 0.05);
+            padding: 0.15rem 0.35rem;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+        }
+    }
+
+    &__status {
+        color: orange;
+        font-weight: 600;
+        margin-top: 0.5rem;
     }
 }
