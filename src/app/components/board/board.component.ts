@@ -61,10 +61,19 @@ export class BoardComponent implements OnInit {
     });
   }
 
+  isMobile = false;
+
   ngOnInit(): void {
     this.boardId = this.route.snapshot.paramMap.get('id')!;
     this.loadBoard();
     this.loadLists();
+
+    this.isMobile = window.innerWidth <= 768;
+
+    // Optional: Add resize listener
+    window.addEventListener('resize', () => {
+      this.isMobile = window.innerWidth <= 768;
+    });
   }
 
   async loadBoard(): Promise<void> {

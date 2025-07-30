@@ -20,6 +20,8 @@ export class ListComponent implements OnInit {
   @Input() cards: Card[] = [];
   @Input() connectedDropLists: string[] = [];
 
+  @Input() isMobile: boolean = false;
+
   @Output() deleteList = new EventEmitter<string>();
   @Output() cardDropped = new EventEmitter<{
     event: CdkDragDrop<Card[]>;
@@ -59,12 +61,14 @@ export class ListComponent implements OnInit {
     this.newCardDescription = '';
     this.showAddCardForm = false;
 
-    // ✅ Reload cards to ensure the card has an ID from Firebase
+    // Reload cards to get Firebase ID
     this.cards = await this.cardService.getCardsByList(this.list.id!);
   }
 
   onCardDrop(event: CdkDragDrop<Card[]>): void {
-    this.cardDropped.emit({ event, listId: this.list.id! });
+    if (!this.isMobile) {
+      this.cardDropped.emit({ event, listId: this.list.id! });
+    }
   }
 
   onDeleteList(): void {

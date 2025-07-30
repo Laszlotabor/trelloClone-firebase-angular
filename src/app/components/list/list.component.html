@@ -7,9 +7,10 @@
     </p>
   </div>
 
-  <!-- Cards Area with Drag/Drop -->
+  <!-- ✅ Desktop Drag & Drop Enabled -->
   <div
     class="cards-area"
+    *ngIf="!isMobile"
     cdkDropList
     [id]="'cdk-drop-list-' + list.id"
     [cdkDropListData]="cards"
@@ -19,11 +20,20 @@
     <div *ngIf="cards?.length === 0" class="empty">No cards yet</div>
 
     <app-card
-    *ngFor="let card of cards"
-    [card]="card"
-    cdkDrag
-  ></app-card>
-  
+      *ngFor="let card of cards"
+      [card]="card"
+      cdkDrag
+    ></app-card>
+  </div>
+
+  <!-- ✅ Mobile Version (no drag/drop directives) -->
+  <div class="cards-area" *ngIf="isMobile">
+    <div *ngIf="cards?.length === 0" class="empty">No cards yet</div>
+
+    <app-card
+      *ngFor="let card of cards"
+      [card]="card"
+    ></app-card>
   </div>
 
   <!-- Add Card Form -->
@@ -57,4 +67,3 @@
     </div>
   </ng-template>
 </div>
-

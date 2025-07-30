@@ -2,7 +2,9 @@
   <!-- Top Section -->
   <div class="top-section">
     <div class="board-header">
-      <h2>Hello, {{ userEmail }}</h2>
+      <h1 [title]="userEmail">
+        Hello, <span class="user-email">{{ userEmail }}</span>
+      </h1>
       <p>
         Welcome on board <strong>{{ board.title }}</strong>
         <span *ngIf="board.description">
@@ -36,8 +38,13 @@
     </form>
   </div>
 
-  <!-- Lists Section with Drag-and-Drop -->
-  <div cdkDropListGroup>
+  <!-- Mobile DnD Info Message -->
+  <div *ngIf="isMobile" class="mobile-dnd-info">
+    <em>Drag and drop is disabled on mobile devices for better experience.</em>
+  </div>
+
+  <!-- 🖥️ Desktop: Drag-and-drop enabled -->
+  <div *ngIf="!isMobile" cdkDropListGroup>
     <div
       class="lists-wrapper"
       cdkDropList
@@ -52,14 +59,27 @@
         [cdkDragData]="list"
       >
         <app-list
+          [list]="list"
+          [cards]="cardsMap[list.id!]"
+          [connectedDropLists]="getDropListIds()"
+          [isMobile]="false"
+          (deleteList)="onDeleteList($event)"
+          (cardDropped)="onCardDrop($event.event, $event.listId)"
+        ></app-list>
+      </div>
+    </div>
+  </div>
+
+  <!-- 📱 Mobile: DnD disabled -->
+  <div *ngIf="isMobile" class="lists-wrapper">
+    <div class="list-drag-item" *ngFor="let list of lists">
+      <app-list
         [list]="list"
         [cards]="cardsMap[list.id!]"
-        [connectedDropLists]="getDropListIds()"
+        [connectedDropLists]="[]"
+        [isMobile]="true"
         (deleteList)="onDeleteList($event)"
-        (cardDropped)="onCardDrop($event.event, $event.listId)" 
-        ></app-list>
-        
-      </div>
+      ></app-list>
     </div>
   </div>
 </div>
