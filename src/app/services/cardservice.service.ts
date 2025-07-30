@@ -1,20 +1,13 @@
-import { Injectable } from '@angular/core';
-import {
-  Database,
-  ref,
-  push,
-  set,
-  get,
-  update,
-  remove,
-} from '@angular/fire/database';
+import { Injectable, inject } from '@angular/core';
+import { Database } from '@angular/fire/database'; // ✅ import the token!
+import { ref, push, set, get, update, remove } from '@angular/fire/database';
 import { Card } from '../models/card.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CardserviceService {
-  constructor(private db: Database) {}
+  private db = inject(Database); // ✅ works now because Database is imported as a token
 
   async createCard(card: Card): Promise<void> {
     const cardsRef = ref(this.db, 'cards');
@@ -22,7 +15,7 @@ export class CardserviceService {
     const cardData: Card = {
       ...card,
       id: newCardRef.key!,
-      imageUrls: card.imageUrls ?? [], // ✅ default to empty array if undefined
+      imageUrls: card.imageUrls ?? [],
     };
     await set(newCardRef, cardData);
   }
@@ -53,7 +46,7 @@ export class CardserviceService {
       position: card.position ?? Date.now(),
       updatedAt: Date.now(),
       imageUrls: card.imageUrls ?? [],
-      done: card.done ?? false, // ✅ add this line
+      done: card.done ?? false,
     });
   }
 

@@ -63,7 +63,9 @@ export class ChatComponent implements OnInit, OnChanges {
     this.loading = true;
     try {
       const chats = await this.chatService.getChatsForCard(this.cardId);
-      this.chats = chats.reverse();
+      this.chats = chats
+        .sort((a, b) => a.createdAt - b.createdAt) // oldest to newest
+        .reverse(); // newest at bottom in display
     } catch (error) {
       console.error('Error loading chats:', error);
     } finally {
@@ -85,12 +87,11 @@ export class ChatComponent implements OnInit, OnChanges {
 
     try {
       await this.chatService.addChat(this.cardId, newChat);
-      this.chats.push(newChat);
-      this.chats = [...this.chats].reverse();
+
+      this.chats.unshift(newChat); // ✅ add to top of reversed array
       this.messageText = '';
       this.chatInput?.nativeElement.focus();
 
-      // Mark card as viewed
       const user = this.auth.currentUser;
       if (user) {
         const viewedRef = ref(
