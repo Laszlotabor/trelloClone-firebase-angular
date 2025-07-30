@@ -1,19 +1,28 @@
 @use '../../../variables' as *;
 
+:host {
+    display: block;
+    width: 100%;
+    max-width: 260px; // ⬅️ clamps app-list width at root
+    flex: 0 0 auto; // ⬅️ prevents growing/shrinking in flex layout
+}
+
 .list-column {
     background-color: $dark-blue;
     border: 1px solid $light-dark-blue;
     border-radius: 8px;
     padding: 1rem;
     width: 260px;
-    max-height: 70vh; // adjust as needed
-    margin-right: 1rem;
+    max-width: 260px;
+    max-height: 70vh;
+    margin-right: 0; // removed extra spacing between lists
     color: white;
 
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 0.1rem;
     overflow: hidden;
+    flex: 0 0 auto; // ⬅️ prevent stretching
 }
 
 .list-header {
@@ -35,9 +44,8 @@
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
-    padding-right: 0.25rem; // space for scrollbar
+    padding-right: 0.25rem;
 
-    // WebKit Browsers (Chrome, Edge, Safari)
     &::-webkit-scrollbar {
         width: 8px;
     }
@@ -55,7 +63,6 @@
         background-color: rgba(255, 255, 255, 0.5);
     }
 
-    // Firefox
     scrollbar-width: thin;
     scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
 }
