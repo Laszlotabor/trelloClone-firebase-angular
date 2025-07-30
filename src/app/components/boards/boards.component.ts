@@ -8,6 +8,8 @@ import { Board } from '../../models/board.model';
 import { BoardServiceService } from '../../services/board-service.service';
 import { AuthServiceService } from '../../services/auth-service.service';
 
+declare var bootstrap: any; // For Bootstrap modal control
+
 @Component({
   selector: 'app-boards',
   standalone: true,
@@ -50,19 +52,29 @@ export class BoardsComponent implements OnInit {
     };
 
     await this.boardService.createBoard(newBoard);
+
+    // Clear form
     this.title = '';
     this.description = '';
+
+    // Close modal
+    const modalEl = document.getElementById('createBoardModal');
+    if (modalEl) {
+      const modalInstance = bootstrap.Modal.getInstance(modalEl);
+      modalInstance?.hide();
+    }
+
+    // Reload boards
     this.loadBoards();
   }
 
   async loadBoards(): Promise<void> {
-    const allBoards = await this.boardService.getAllBoards(); // must return all from Firebase
+    const allBoards = await this.boardService.getAllBoards();
     this.boards = allBoards.filter(
       (board) =>
         board.owner === this.uid ||
         (board.allowedUsers?.includes(this.userEmail) ?? false)
     );
-    
   }
 
   async deleteBoard(board: Board, event: MouseEvent): Promise<void> {
