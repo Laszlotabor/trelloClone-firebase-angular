@@ -1,49 +1,42 @@
-<div class="container my-5 boards-wrapper font-inter">
-  <!-- Greeting Header -->
-  <div class="text-center mb-5 boards-header">
-    <h1 class="fw-bold display-5">
-      Welcome back, <span class="highlight text-warning">{{ userEmail }}</span> 👋
-    </h1>
-    <p class="text-muted fs-5 subtext">Pick a board to get started or create a new one below</p>
-  </div>
-
-  <!-- Create Board Button -->
-  <div class="text-center mb-4">
+<div class="boards-page font-inter">
+  <!-- Header -->
+  <section class="boards-header">
+    <h1>Welcome back, <span class="highlight">{{ userEmail }}</span> </h1>
+    <p class="subtext">Select a board to get started or create a new one below.</p>
     <button
-      class="btn btn-primary px-4 py-2 fw-semibold"
+      class="btn-create"
       data-bs-toggle="modal"
       data-bs-target="#createBoardModal"
     >
-      <i class="bi bi-plus-lg me-2"></i>Create Board
+      <i class="bi bi-plus-lg me-1"></i> Create New Board
     </button>
-  </div>
+  </section>
+  
 
   <!-- Boards Grid -->
-  <div *ngIf="boards.length > 0; else noBoards" class="row g-4 mb-5 board-list">
+  <section class="boards-grid" *ngIf="boards.length > 0; else noBoards">
     <div
-      class="col-md-6 col-lg-4"
+      class="board-card"
       *ngFor="let board of boards"
       [routerLink]="['/board', board.id]"
     >
-      <div class="card h-100 shadow-sm hover-card border-0 cursor-pointer board-card">
-        <div class="card-body">
-          <h5 class="card-title fw-semibold mb-2">
-            <i class="bi bi-columns-gap me-2 text-primary"></i>{{ board.title }}
-          </h5>
-          <p class="card-text text-muted">{{ board.description || 'No description yet' }}</p>
-        </div>
-      </div>
+      <h3 class="title">
+        <i class="bi bi-columns-gap me-2 text-primary"></i>{{ board.title }}
+      </h3>
+      <p class="description">
+        {{ board.description || 'No description yet.' }}
+      </p>
     </div>
-  </div>
+  </section>
 
   <!-- Empty State -->
   <ng-template #noBoards>
-    <div class="text-center empty-state">
-      <p class="text-muted fs-5">You don't have any boards yet. Start by creating one!</p>
+    <div class="empty-state">
+      <p>You don't have any boards yet. Start by creating one!</p>
     </div>
   </ng-template>
 
-  <!-- Create Board Modal -->
+  <!-- Modal (unchanged) -->
   <div
     class="modal fade"
     id="createBoardModal"

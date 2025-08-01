@@ -8,11 +8,12 @@ $dark-blue: rgb(2, 15, 26);
 .board-container {
     display: flex;
     flex-direction: column;
-    height: 100%; // FIXED: was 100vh, causing overflow
+    min-height: 100vh;
     background-color: $more-bright-blue;
     padding: 1rem;
     box-sizing: border-box;
     color: $dark-blue;
+    overflow: visible; // ✅ Let the content grow
 }
 
 .top-section {
@@ -190,6 +191,9 @@ $dark-blue: rgb(2, 15, 26);
 @media (max-width: 480px) {
     .board-container {
         padding: 0.5rem;
+        height: auto;
+        min-height: 100vh;
+        overflow-y: auto;
     }
 
     .board-header {
@@ -203,31 +207,50 @@ $dark-blue: rgb(2, 15, 26);
     }
 
     .create-list-form {
+        flex-direction: column;
         padding: 0.5rem;
         gap: 0.5rem;
 
         input,
         textarea {
+            width: 100%;
             font-size: 0.9rem;
         }
 
         button {
             font-size: 0.85rem;
             padding: 0.3rem 0.8rem;
+            width: fit-content;
         }
-    }
-
-    .lists-wrapper {
-        gap: 0.4rem;
-    }
-
-    .list-drag-item {
-        width: 90vw;
     }
 
     .btn-back,
     .btn-delete-board {
         font-size: 0.8rem;
         padding: 0.4rem 0.8rem;
+    }
+
+    .lists-wrapper {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        overflow-y: hidden;
+        scroll-snap-type: x mandatory;
+        scroll-padding-left: 0.5rem;
+        scroll-behavior: smooth;
+        padding: 1rem 0 1rem 0.5rem;
+        gap: 0; // remove flex gap
+    }
+
+    .list-drag-item {
+        width: 92vw;
+        margin-right: 0.5rem;
+        flex-shrink: 0;
+        scroll-snap-align: start;
+    }
+
+    .list-drag-item:last-child {
+        margin-right: 0; // no extra spacing at the end
     }
 }
