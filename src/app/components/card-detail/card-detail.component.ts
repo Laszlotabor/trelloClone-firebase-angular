@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -22,7 +22,7 @@ import { v4 as uuidv4 } from 'uuid';
   templateUrl: './card-detail.component.html',
   styleUrls: ['./card-detail.component.scss'],
 })
-export class CardDetailComponent {
+export class CardDetailComponent implements OnInit, OnDestroy {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private cardService = inject(CardserviceService);
@@ -38,6 +38,10 @@ export class CardDetailComponent {
   editableTitle = '';
   editableDescription = '';
 
+  // 🔥 Mobile Chat Modal Support
+  chatModalOpen = false;
+  isMobileView = false;
+
   constructor() {
     this.route.paramMap.subscribe(async (params) => {
       const id = params.get('id');
@@ -48,6 +52,26 @@ export class CardDetailComponent {
         this.loading = false;
       }
     });
+  }
+
+  ngOnInit(): void {
+    this.updateViewMode();
+    window.addEventListener('resize', this.updateViewModeBound);
+  }
+
+  ngOnDestroy(): void {
+    window.removeEventListener('resize', this.updateViewModeBound);
+  }
+
+  // Bound version for add/removeEventListener
+  private updateViewModeBound = () => this.updateViewMode();
+
+  private updateViewMode(): void {
+    this.isMobileView = window.innerWidth <= 768;
+  }
+
+  toggleChatModal(): void {
+    this.chatModalOpen = !this.chatModalOpen;
   }
 
   private async markCardAsViewed(cardId: string): Promise<void> {
@@ -135,6 +159,7 @@ export class CardDetailComponent {
       console.error('Image upload failed:', err);
     }
   }
+
   async deleteImage(url: string): Promise<void> {
     if (!this.card || !this.card.imageUrls) return;
 
