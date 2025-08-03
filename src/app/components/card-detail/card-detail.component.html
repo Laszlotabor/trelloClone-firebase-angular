@@ -51,31 +51,19 @@
           <button class="btn btn-outline-danger" (click)="deleteCard()">🗑️ Delete</button>
           <button class="btn btn-outline-secondary" (click)="fileInput.click()">🖼️ Add Image</button>
           <input type="file" #fileInput (change)="onImageSelected($event)" hidden />
-
-          <!-- Mobile Chat Toggle -->
-          <button class="btn btn-outline-info chat-toggle-btn" *ngIf="isMobileView" (click)="toggleChatModal()">
-            💬 Open Chat
-          </button>
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- Right: Chat (desktop only) -->
-  <div class="card-chat-panel" *ngIf="!isMobileView">
-    <ng-container *ngIf="card.id">
-      <app-chat *ngIf="card?.id" [cardId]="card.id!"></app-chat>
-
-    </ng-container>
-  </div>
-
-  <!-- Mobile Chat Modal -->
-  <div class="chat-modal-overlay" *ngIf="chatModalOpen">
-    <div class="chat-modal">
-      <button class="btn-close" (click)="toggleChatModal()">✖</button>
-      <app-chat *ngIf="card?.id" [cardId]="card.id!"></app-chat>
-
+    <!-- Chat panel on mobile (inline) -->
+    <div class="card-chat-panel mobile-chat" *ngIf="isMobileView && card?.id">
+      <app-chat [cardId]="card.id!"></app-chat>
     </div>
+  </div>
+
+  <!-- Chat panel on desktop (right) -->
+  <div class="card-chat-panel desktop-chat" *ngIf="!isMobileView && card?.id">
+    <app-chat [cardId]="card.id!"></app-chat>
   </div>
 
   <!-- Edit Modal -->
