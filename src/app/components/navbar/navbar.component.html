@@ -14,23 +14,23 @@
           <ng-container *ngIf="isLoggedIn; else guestLinks">
             
             <li class="nav-item">
-              <a class="nav-link active" routerLink="/boards">Your Boards</a>
+              <a class="nav-link active" routerLink="/boards"><span>Your Boards</span></a>
             </li>
 
             <li class="nav-item">
-              <a class="nav-link active" routerLink="/workflow">workFlow</a>
+              <a class="nav-link active" routerLink="/workflow"><span>workFlow</span></a>
             </li>
           </ng-container>
   
           <ng-template #guestLinks>
             <li class="nav-item">
-              <a class="nav-link active" routerLink="/home">Home</a>
+              <a class="nav-link active" routerLink="/home"><span>home</span></a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" routerLink="/login">Login</a>
+              <a class="nav-link active" routerLink="/login"><span>login</span></a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" routerLink="/register">Register</a>
+              <a class="nav-link active" routerLink="/register"><span>register</span></a>
             </li>
           </ng-template>
         </ul>
@@ -38,7 +38,7 @@
         <!-- Right side logout -->
         <ul class="navbar-nav ms-auto mb-2 mb-lg-0" *ngIf="isLoggedIn">
           <li class="nav-item">
-            <a class="nav-link active logout-link" (click)="logout()">Logout</a>
+            <a class="nav-link active logout-link" (click)="logout()"><span>logout</span></a>
           </li>
         </ul>
       </div>

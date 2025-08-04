@@ -1,13 +1,45 @@
 .navbar {
-
-    position: sticky;
+    position: fixed;
     top: 0;
-    z-index: 1000; // Adjust the z-index value as needed
-    
+    left: 0;
+    width: 100%;
+    z-index: 1000;
     height: 60px;
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 
-      }
+    .nav-link {
 
+        // Base style (for desktop/tablet)
+        span {
+            font-size: 1rem;
+            padding: 4px 8px;
+            border-radius: 6px;
+
+            &:hover {
+                    color: blue;
+                }
+        }
+
+        // Apply blur effect ONLY on mobile
+        @media (max-width: 768px) {
+            span {
+                display: inline-block;
+                padding: 8px 14px;
+                border-radius: 12px;
+                font-size: 2rem;
+                font-weight: bold;
+                backdrop-filter: blur(6px);
+                background-color: rgba(255, 255, 255, 0.082);
+                transition: background-color 0.3s ease, font-size 0.3s ease;
+            }
+
+            &:hover span {
+                color: blue;
+            }
+        }
+    }
+}
 
 
 .logout-link {
